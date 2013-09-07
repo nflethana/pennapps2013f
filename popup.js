@@ -1,12 +1,12 @@
 document.addEventListener('DOMContentLoaded', function () {
-  var ptag = document.createElement('p');
-  ptag.innerHTML = "skl;sdfjlasl;kdfjsadl;k";
-  document.body.appendChild(ptag);
-  createNewGroup();
+  $('#foo').click(function() {
+    createNewGroup();
+    console.log("yoooo");
+  });
   console.log('wooooooo');
   chrome.extension.getBackgroundPage().console.log('foo');
 });
 
 function createNewGroup() {
-  window.location="http://www.google.com/";
+  self.location="../test.html";
 }
