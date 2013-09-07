@@ -18,8 +18,14 @@ document.addEventListener('DOMContentLoaded', function () {
 		  		checked = "unchecked";
 		  	}
 		  	console.log('appending' + i);
-		    $list.append('<div class="checkbox"><label class="groupLabel"><input type="checkbox" id="'+page.categories[i]+'" name="'+page.categories[i]+'" '+checked+'>'+page.categories[i]+'</label><a href="#"><span class="deleteX"><i class="icon-remove"></i></span></a></div>');
-		  }
+		    $list.append('<div class="checkbox"><label class="groupLabel"><input type="checkbox" id="'+page.categories[i]+'" name="'+page.categories[i]+'" checked>'+page.categories[i]+'</label><a href="#"><span class="deleteX" id="'+page.categories[i]+'x"><i class="icon-remove"></i></span></a></div>');
+		    		  }
+		    		  $('.deleteX').on('click', function(){
+		    		  	var xID = ($(this).attr('id'));
+		    		  	console.log(xID.slice(0, -1));
+		    		  	page.removeCategory(xID.slice(0, -1));
+		    		  	displayGroups(page);
+		    		  });
 		}
 		displayGroups(page);
 		addUncheck();
@@ -56,14 +62,17 @@ document.addEventListener('DOMContentLoaded', function () {
 		if (groupName.length > 0){
 			page.addCategory(groupName);
 			$('#newGroupName').val('');
-			$('#group-block').append('<div class="checkbox"><label class="groupLabel"><input type="checkbox" id="'+groupName+'" name="'+groupName+'" checked>'+groupName+'</label><a class="anchorX" href="#"><span class="deleteX"><i class="icon-remove"></i></span></a></div>');
+			$('#group-block').append('<div class="checkbox"><label class="groupLabel"><input type="checkbox" id="'+groupName+'" name="'+groupName+'" checked>'+groupName+'</label><a href="#"><span class="deleteX" id="'+groupName+'x"><i class="icon-remove"></i></span></a></div>');
 		}
-		addUncheck();
+
+		$('.deleteX').on('click', function(){
+			var xID = ($(this).attr('id'));
+			console.log(xID.slice(0, -1));
+			page.removeCategory(xID.slice(0, -1));
+			displayGroups(page);
+		});
 	});
 
-	$('.anchorX').click(function(){
-		console.log('clicked this shit');
-	});
 
     // Add functionality for Add current tab to...
     
@@ -126,4 +135,4 @@ document.addEventListener('DOMContentLoaded', function () {
     	});
     });
   });
-});
+
