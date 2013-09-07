@@ -112,10 +112,6 @@ document.addEventListener('DOMContentLoaded', function () {
     	chrome.alarms.onAlarm.addListener(function(alarm) {
     		console.log("alarm sounded!");
     	});
-<<<<<<< HEAD
-=======
-
->>>>>>> dcc6a62a38332b045665770f46ff5cbb3fb96618
     });
   });
 });
