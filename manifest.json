@@ -11,7 +11,7 @@
   },
   "permissions": [
     "tabs", 
-    "http://*/*", "https://*/*", "<all_urls>", "background"
+    "http://*/*", "https://*/*", "<all_urls>", "background", "storage"
   ],
   "background": {
     "scripts": ["background.js"]
