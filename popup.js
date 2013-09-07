@@ -46,9 +46,8 @@ document.addEventListener('DOMContentLoaded', function () {
             checkedCategories.push(page.categories[i]);
           }
         }
-        console.log(checkedCategories);
 
-
+        console.log(page.currentTabs);
 
         // chrome.tabs.getSelected(null, function(tab) {
         //   page.addTab(tab, checkedCategories);
@@ -100,7 +99,6 @@ document.addEventListener('DOMContentLoaded', function () {
     	chrome.alarms.onAlarm.addListener(function(alarm) {
     		console.log("alarm sounded!");
     	});
-\
     });
   });
 });
