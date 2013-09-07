@@ -1,6 +1,9 @@
-chrome.runtime.getBackgroundPage(function(page){
+document.addEventListener('DOMContentLoaded', function () {
 
-  document.addEventListener('DOMContentLoaded', function () {
+	chrome.runtime.getBackgroundPage(function(page){
+  
+  	console.log("ahhh");
+
     for(category in page.categories){
       console.log(category);
     
@@ -14,5 +17,13 @@ chrome.runtime.getBackgroundPage(function(page){
       page.openTabs('foo');
       page.categories.foo=[];
     });
+
+    $('#createNewGroup').click(function() {
+       createNewGroup();
+   });
   });
 });
+
+function createNewGroup() {
+	self.location="../createNewGroup.html";
+}
