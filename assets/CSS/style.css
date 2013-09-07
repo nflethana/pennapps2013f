@@ -8,3 +8,15 @@ body {
 	width: 150px;
 }
 
+#groupName {
+	display:none;
+}
+
+#newGroupName {
+	float:right;
+}
+
+.plusButton {
+	float:right;
+	margin:5px;
+}

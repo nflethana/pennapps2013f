@@ -14,15 +14,14 @@
      -->
     <script src="dependencies/js/bootstrap.min.js"></script> 
     <script src="popup.js"></script>
+    <script src="createNewGroup.js"></script>
   </head>
   <body>
+        <span class="plusButton"><i class="icon-plus-sign"></i></span>
+    <input type="text" id="newGroupName" placeholder="Add new group here">
+
     <div id="group-block"></div>
     <button type="button" class="btn btn-primary btn-lg btn-block">Add tab to...</button>
-    <button type="button" id="createNewGroup" class="btn btn-primary btn-lg btn-block">Add new Group...</button>
-    <div id="groupform" style="display:none">
-      <input id="groupinput" type="text">
-      <button id="groupsubmit">Submit</button>
-    </div>
     <button type="button" class="btn btn-primary btn-lg btn-block">Add Reminder to Page...</button>
   </body>
 </html>
