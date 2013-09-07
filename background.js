@@ -29,7 +29,7 @@ however it stores the domains associated with each group for auto-categorizing
 */
 chrome.storage.local.get('domainList',function(result){
 	if(result.domainList){
-		window.domainList = result.domainList;
+		window.domainList = result.domainLiset;
 	} else {
 		window.domainList = {};
 	}
@@ -73,12 +73,12 @@ function saveCategories(){
 	});
 }
 function saveTabs(){
-	chrome.storage.local.set({"currenttabs":currenttabs},function(){
+	chrome.storage.local.set({"currentTabs":currentTabs},function(){
 		console.log('tab storage done');
 	});
 }
 function saveDomains(){
-	chrome.storage.local.set({"domainlist":domainlist},function(){
+	chrome.storage.local.set({"domainList":domainList},function(){
 		console.log('domain storage done');
 	});
 }
