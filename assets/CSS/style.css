@@ -17,7 +17,17 @@ body {
 	float:right;
 }
 
+#addTabBlock {
+	list-style:none;
+	display:none;
+}
+
 .plusButton {
 	float:right;
 	margin:5px;
+}
+
+#submitAddTab, #cancelAddTab {
+	display: inline-block;
+	align:center;
 }

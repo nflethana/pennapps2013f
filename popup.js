@@ -39,6 +39,33 @@ document.addEventListener('DOMContentLoaded', function () {
 		}
 		displayGroups(page);
     // Add functionality for Add current tab to...
+    
+    $('#submitAddTab').click(function() {
+        var checkedCategories = [];
+        var $tabsBlock = $('#addTabBlock');
+        for (var i = 0; i < page.categories.length; i++) {
+          var $listItem = $('#att'+page.categories[i]);
+          if ($listItem.prop('checked', 'true')) {
+            checkedCategories.push(page.categories[i]);
+          }
+        }
+        console.log(checkedCategories);
+
+
+
+        // chrome.tabs.getSelected(null, function(tab) {
+        //   page.addTab(tab, checkedCategories);
+        // });
+        checkedCategories=[];
+        $tabsBlock.css("display", "none");
+
+    });
+
+    $('#cancelAddTab').click(function() {
+      var $tabsBlock = $('#addTabBlock');
+      $tabsBlock.css("display", "none");
+    });
+
     $('#addCurrentTabTo').click(function() {
     	// chrome.tabs.query({
     	// 	active: true,
@@ -48,16 +75,22 @@ document.addEventListener('DOMContentLoaded', function () {
     	// 	var tab = tabs[0];
     	// 	console.log(tab);
     	// });
-      console.log("displaying groups");
-      displayGroups(page);
-    	var checkedCategories = [];
+    
+      var $tabsBlock = $("#addTabBlock");
+      var $tabsList = $("#addTabList");
+      for (var i = 0; i < page.categories.length; i++) {
+        if ($('#att'+page.categories[i]).length == 0)
+        $tabsList.append('<li class="checkbox"><label><input type="checkbox" id="att'+page.categories[i]+'" name="'+page.categories[i]+'" unchecked>'+page.categories[i]+'</label></li>');
+      }
+      
 
-    	console.log("yo");
 
-    	chrome.tabs.getSelected(null, function(tab) {
-    		page.addTab(tab, checkedCategories);
+      $tabsBlock.css("display","block");
 
-    	});
+    	// chrome.tabs.getSelected(null, function(tab) {
+    	// 	page.addTab(tab, checkedCategories);
+
+    	// });
     });
   });
 });
