@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', function () {
       //chrome.tabs.remove(tab.id);
       page.addTab(tab.url,'foo');
     });
-    $('#addtab').click(function(){
+    $('#addTab').click(function(){
       console.log('clicked');
       page.openTabs('foo');
       page.categories.foo=[];
