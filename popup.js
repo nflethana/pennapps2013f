@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', function () {
     	// 	var tab = tabs[0];
     	// 	console.log(tab);
     	// });
-
+      displayGroups(page);
     	var categories = [];
 
     	console.log("yo");
