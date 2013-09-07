@@ -16,6 +16,7 @@ document.addEventListener('DOMContentLoaded', function () {
       });
       $('groupsubmit').click(function({
         console.log($('#groupinput').val());
+        
       });
       $('#addTab').click(function(){
         console.log('clicked');

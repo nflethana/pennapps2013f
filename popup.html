@@ -2,6 +2,7 @@
 <html>
   <head>
     <title>Getting Started Extension's Popup</title>
+    <script src="dependencies/js/jquery.js"></script>
     <link href="dependencies/css/bootstrap.min.css" rel="stylesheet" />
     <link href="assets/css/style.css" rel="stylesheet" />
     	
@@ -14,27 +15,31 @@
       - [1]: http://developer.chrome.com/extensions/contentSecurityPolicy.html
      -->
     <script src="dependencies/js/bootstrap.min.js"></script> 
-    <script src="dependencies/js/jquery.js"></script>
+    <script src="alex.js"></script>
     <script src="popup.js"></script>
   </head>
   <body>
     <div id="group-block">
-        <form action="">
-          <label class="checkbox">
-            <input type="checkbox" name="groups" value="G1">Homework
-          </label>
-          <label class="checkbox">
-            <input type="checkbox" name="groups" value="G2">Porn
-          </label>
-          <label class="checkbox">
-            <input type="checkbox" name="groups" value="G3">Criminal Activity
-          </label>
-        </form>
-      </div>
+      <form action="">
+        <label class="checkbox">
+          <input type="checkbox" name="groups" value="G1">Homework
+        </label>
+        <label class="checkbox">
+          <input type="checkbox" name="groups" value="G2">Porn
+        </label>
+        <label class="checkbox">
+          <input type="checkbox" name="groups" value="G3">Criminal Activity
+        </label>
+      </form>
+    </div>
 
-      <button type="button" class="btn btn-primary btn-lg btn-block">Add tab to...</button>
-      <button type="button" id="createNewGroup" class="btn btn-primary btn-lg btn-block">Add new Group...</button>
-      <button type="button" class="btn btn-primary btn-lg btn-block">Add Reminder to Page...</button>
+    <button type="button" class="btn btn-primary btn-lg btn-block">Add tab to...</button>
+    <button type="button" id="createNewGroup" class="btn btn-primary btn-lg btn-block">Add new Group...</button>
+    <div id="groupform" style="display:none">
+      <input id="groupinput" type="text">
+      <button id="groupsubmit">Submit</button>
+    </div>
+    <button type="button" class="btn btn-primary btn-lg btn-block">Add Reminder to Page...</button>
   </body>
 </html>
 
