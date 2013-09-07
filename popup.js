@@ -16,8 +16,14 @@ document.addEventListener('DOMContentLoaded', function () {
 		  		checked = "unchecked";
 		  	}
 		  	console.log('appending' + i);
-		    $list.append('<div class="checkbox"><label class="groupLabel"><input type="checkbox" id="'+page.categories[i]+'" name="'+page.categories[i]+'" '+checked+'>'+page.categories[i]+'</label><a href="#"><span class="deleteX"><i class="icon-remove"></i></span></a></div>');
-		  }
+		    $list.append('<div class="checkbox"><label class="groupLabel"><input type="checkbox" id="'+page.categories[i]+'" name="'+page.categories[i]+'" checked>'+page.categories[i]+'</label><a href="#"><span class="deleteX" id="'+page.categories[i]+'x"><i class="icon-remove"></i></span></a></div>');
+		    		  }
+		    		  $('.deleteX').on('click', function(){
+		    		  	var xID = ($(this).attr('id'));
+		    		  	console.log(xID.slice(0, -1));
+		    		  	page.removeCategory(xID.slice(0, -1));
+		    		  	displayGroups(page);
+		    		  });
 		}
 		displayGroups(page);
 		addUncheck();
@@ -65,24 +71,6 @@ document.addEventListener('DOMContentLoaded', function () {
 		});
 	});
 
-		displayGroups = function(page){
-			console.log(page.categories);
-			var $list = $('#group-block');
-			$list.html('');
-		  for (var i=0;i<page.categories.length;i++){
-		  	console.log('appending' + i);
-		    $list.append('<div class="checkbox"><label class="groupLabel"><input type="checkbox" id="'+page.categories[i]+'" name="'+page.categories[i]+'" checked>'+page.categories[i]+'</label><a href="#"><span class="deleteX" id="'+page.categories[i]+'x"><i class="icon-remove"></i></span></a></div>');
-		  }
-		  $('.deleteX').on('click', function(){
-		  	var xID = ($(this).attr('id'));
-		  	console.log(xID.slice(0, -1));
-		  	page.removeCategory(xID.slice(0, -1));
-		  	displayGroups(page);
-		  });
-		}
-		displayGroups(page);
-
-		addUncheck();
 
     // Add functionality for Add current tab to...
     
@@ -145,4 +133,4 @@ document.addEventListener('DOMContentLoaded', function () {
     	});
     });
   });
-});
+
