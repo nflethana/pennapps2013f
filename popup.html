@@ -15,22 +15,11 @@
       - [1]: http://developer.chrome.com/extensions/contentSecurityPolicy.html
      -->
     <script src="dependencies/js/bootstrap.min.js"></script> 
-    <script src="alex.js"></script>
     <script src="popup.js"></script>
   </head>
   <body>
     <div id="group-block">
-      <form action="">
-        <label class="checkbox">
-          <input type="checkbox" name="groups" value="G1">Homework
-        </label>
-        <label class="checkbox">
-          <input type="checkbox" name="groups" value="G2">Porn
-        </label>
-        <label class="checkbox">
-          <input type="checkbox" name="groups" value="G3">Criminal Activity
-        </label>
-      </form>
+      <ul id="group-list"></ul>
     </div>
 
     <button type="button" class="btn btn-primary btn-lg btn-block">Add tab to...</button>
