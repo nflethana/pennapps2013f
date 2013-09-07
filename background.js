@@ -13,6 +13,9 @@ window.categories = [];
 addTab = function(tab,category){
 	if(window.currentTabs[category]){
 		window.currentTabs[category].push(tab);
+	} else {
+		window.currentTabs[category]=[];
+		window.currentTabs[category].push(tab);
 	}
 }
 /*
