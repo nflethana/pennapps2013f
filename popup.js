@@ -6,8 +6,6 @@ document.addEventListener('DOMContentLoaded', function () {
     console.log(page.categories);
     var $list = $('#group-block');
     for (var i=0;i<page.categories.length;i++){
-      console.log(i);
-      var li = $('li');
       $list.append('<input type="checkbox" name="'+page.categories[i]+'"></input><label>'+page.categories[i]+'</label><br>');
     }
       $('#createNewGroup').click(function() {
