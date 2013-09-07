@@ -64,13 +64,12 @@ document.addEventListener('DOMContentLoaded', function () {
             checkedCategories.push(page.categories[i]);
           }
         }
-        console.log(checkedCategories);
+
 
         chrome.tabs.getSelected(null, function(tab) {
           page.addTab(tab, checkedCategories);
           console.log(page.currentTabs);
          });
-      
 
         $tabsBlock.css("display", "none");
 
