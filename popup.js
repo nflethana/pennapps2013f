@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', function () {
 			$list.html('');
 		  for (var i=0;i<page.categories.length;i++){
 		  	console.log('appending' + i);
-		    $list.append('<input type="checkbox" id="'+page.categories[i]+'" name="'+page.categories[i]+'" checked></input><label>'+page.categories[i]+'</label><br>');
+		    $list.append('<div class="checkbox"><label class="groupLabel"><input type="checkbox" id="'+page.categories[i]+'" name="'+page.categories[i]+'" checked>'+page.categories[i]+'</label><a href="#"><span class="deleteX"><i class="icon-remove"></i></span></a></div>');
 		  }
 		}
 		displayGroups(page);

@@ -1,12 +1,11 @@
 body {
-  min-width: 357px;
+  min-width: 275px;
   overflow-x: hidden;
 }
 
 #group-block {
-	clear:right;
+	clear:left;
 	margin: 5px;
-	width: 150px;
 }
 
 #groupName {
@@ -14,10 +13,34 @@ body {
 }
 
 #newGroupName {
-	float:right;
+	float:left;
+	margin-left: 5px;
+	margin-top: 5px;
+}
+
+.groupLabel {
+	display: inline-block;
 }
 
 .plusButton {
-	float:right;
-	margin:5px;
+	float:left;
+	margin: 5px;
+	margin-left: 7px;
+	margin-top: 10px;
+	position: relative;
+}
+
+.plusButton:active {
+	top: 2px;
+	transition: 0.2s;
+}
+
+.deleteX {
+	float: right;
+	position: relative;
+}
+
+.deleteX:active {
+	top: 2px;
+	transition: 0.2s;
 }
