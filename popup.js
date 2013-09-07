@@ -2,9 +2,6 @@ document.addEventListener('DOMContentLoaded', function () {
   chrome.runtime.getBackgroundPage(function(page){
 
     console.log(page.categories);
-
-
-
       
     //  Check to see if the user un-checks the group
     if (typeof page.categories != "undefined") {
