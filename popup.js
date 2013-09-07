@@ -1,12 +1,18 @@
-document.addEventListener('DOMContentLoaded', function () {
-  var ptag = $('<p>asdfasdfsdaf</p>');
-  $('body').append(ptag);
-  console.log('wooooooo');
-  chrome.tabs.getSelected(function(tab){
-    //chrome.tabs.remove(tab.id);
-    chrome.runtime.getBackgroundPage(function(page){
-      page.openLastPage();
-      page.lastpageURL = tab.url;
+chrome.runtime.getBackgroundPage(function(page){
+
+  document.addEventListener('DOMContentLoaded', function () {
+    for(category in page.categories){
+      console.log(category);
+    
+    }
+    chrome.tabs.getSelected(function(tab){
+      //chrome.tabs.remove(tab.id);
+      page.addTab(tab.url,'foo');
+    });
+    $('#addtab').click(function(){
+      console.log('clicked');
+      page.openTabs('foo');
+      page.categories.foo=[];
     });
   });
 });
