@@ -3,7 +3,7 @@
 window.currenttabs is an object whose keys are the different tab
 categories and whose values are the current tabs open under that category
 */
-window.currenttabs={};
+window.currentTabs={};
 
 /* 
 categories is just an array with all the category names in it
@@ -11,8 +11,8 @@ categories is just an array with all the category names in it
 window.categories = [];
 
 addTab = function(tab,category){
-	if(window.currenttabs[category]){
-		window.currenttabs[category].push(tab);
+	if(window.currentTabs[category]){
+		window.currentTabs[category].push(tab);
 	}
 }
 /*
@@ -30,7 +30,7 @@ openTabs = function(category){
 addCategory = function(categoryName) {
 	if (window.categories.indexOf(categoryName)==-1){
 		window.categories.push(categoryName);
-		window.currenttabs[categoryName]=[];
+		window.currentTabs[categoryName]=[];
 		window.domainlist[categoryName]=[];
 		console.log(categoryName + " added");
 		console.log(categories);
