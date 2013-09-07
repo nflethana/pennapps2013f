@@ -1,18 +1,20 @@
-chrome.runtime.getBackgroundPage(function(page){
-
-  document.addEventListener('DOMContentLoaded', function () {
-    for(category in page.categories){
-      console.log(category);
-    
-    }
+document.addEventListener('DOMContentLoaded', function () {
+  chrome.runtime.getBackgroundPage(function(page){
     chrome.tabs.getSelected(function(tab){
-      //chrome.tabs.remove(tab.id);
-      page.addTab(tab.url,'foo');
+      for(category in page.categories){
+        console.log(category);    
+      }    
+        //chrome.tabs.remove(tab.id);
+      
+      
     });
-    $('#addtab').click(function(){
-      console.log('clicked');
-      page.openTabs('foo');
-      page.categories.foo=[];
-    });
+
+    $('#createNewGroup').click(function() {
+       createNewGroup();
+   });
   });
 });
+
+function createNewGroup() {
+	self.location="../createNewGroup.html";
+}
