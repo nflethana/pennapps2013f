@@ -53,7 +53,18 @@ document.addEventListener('DOMContentLoaded', function () {
 
     	chrome.tabs.getSelected(null, function(tab) {
     		page.addTab(tab, checkedCategories);
+    	});
+    });
 
+    //  Add functionality for Add reminder to current page
+    $('#addReminderToCurrentPage').click(function() {
+    	// add logic for adding a reminder...
+    	
+    	var alarmInfo = {};
+    	alarmInfo.when = Date.now() + 10;
+    	chrome.alarms.create("alarm1", alarmInfo);
+    	chrome.alarms.onAlarm.addListener(function(alarm) {
+    		console.log("alarm sounded!");
     	});
     });
   });
