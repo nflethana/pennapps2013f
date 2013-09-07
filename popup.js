@@ -59,7 +59,7 @@ document.addEventListener('DOMContentLoaded', function () {
 		addUncheck();
 	});
 
-	$('.deleteX').click(function(){
+	$('.anchorX').click(function(){
 		console.log('clicked this shit');
 	});
 
