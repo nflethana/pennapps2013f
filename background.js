@@ -82,16 +82,10 @@ openTabs = function(category){
 	}
 }
 removeCategory = function(categoryName){
-	console.log(window.categories);
 	window.categories.splice(window.categories.indexOf(categoryName),1);
 	delete window.currentTabs[categoryName];
 	delete window.domainList[categoryName];
-<<<<<<< HEAD
-	console.log(window.categories);
-	console.log(categoryName);
-=======
 	delete window.categoriesChecked[categoryName];
->>>>>>> f5b557b2d4decdf00fdae26624158711d875bcf6
 }
 addCategory = function(categoryName) {
 	if (window.categories.indexOf(categoryName)==-1){

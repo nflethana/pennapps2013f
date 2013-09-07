@@ -83,7 +83,6 @@ document.addEventListener('DOMContentLoaded', function () {
 		displayGroups(page);
 
 		addUncheck();
-	});
 
     // Add functionality for Add current tab to...
     
