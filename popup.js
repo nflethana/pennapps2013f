@@ -6,10 +6,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
     displayGroups = function(page){
 			console.log(page.categories);
+			console.log(page.checkedCategories);
 			var $list = $('#group-block');
 			$list.html('');
 		  for (var i=0;i<page.categories.length;i++){
 		  	var checked;
+		  	console.log(page.checkedCategories);
 		  	if (page.checkedCategories[page.categories[i]]) {
 		  		checked = "checked";
 		  	} else {
