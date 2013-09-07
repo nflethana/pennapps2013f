@@ -17,7 +17,7 @@ chrome.storage.local.get('categories',function(result){
 
 
 addTab = function(tab, categories){
-	for (int i = 0; i < categories.length; i++) {
+	for (var i = 0; i < categories.length; i++) {
 		if(window.currentTabs[categories[i]]){
 			window.currentTabs[categories[i]].push(tab);
 		}
@@ -47,7 +47,7 @@ findCategory = function(tabID){
 
 openTabs = function(category){
 	for(var i=0; i<window.currentTabs[category].length;i++){
-		chrome.tabs.create({window.currentTabs[category][i]);
+		chrome.tabs.create({url:window.currentTabs[category][i].url});
 	}
 }
 addCategory = function(categoryName) {

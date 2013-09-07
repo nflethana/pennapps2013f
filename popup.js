@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
   chrome.runtime.getBackgroundPage(function(page){
+    console.log(page);
     chrome.tabs.getSelected(function(tab){
 
     });
