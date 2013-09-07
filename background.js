@@ -16,3 +16,6 @@ openTabs = function(category){
 		chrome.tabs.create({url:window.categories[category][i]});
 	}
 }
+addCategory = function(categoryName) {
+	window.categories.push(categoryName);
+}
