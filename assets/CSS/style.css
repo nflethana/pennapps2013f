@@ -27,16 +27,12 @@ body {
 	display:none;
 }
 
-.plusButton {
-<<<<<<< HEAD
-	float:right;
-	margin:5px;
-}
-
 #submitAddTab, #cancelAddTab {
 	display: inline-block;
 	align:center;
-=======
+}
+
+.plusButton {
 	float:left;
 	margin: 5px;
 	margin-left: 7px;
