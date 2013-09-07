@@ -28,7 +28,23 @@ document.addEventListener('DOMContentLoaded', function () {
     		}
     	});
     }
-    
+
+    // Add functionality for Add current tab to...
+    $('#addCurrentTabTo').click(function() {
+    	// chrome.tabs.query({
+    	// 	active: true,
+    	// 	lastFocusedWindow: true
+    	// }, function(tabs) {
+    	// 	console.log(tabs);
+    	// 	var tab = tabs[0];
+    	// 	console.log(tab);
+    	// });
+
+    	chrome.tabs.getSelected(function(tab) {
+    		console.log(tab);
+    	});
+    });
+
   });
 });
 
