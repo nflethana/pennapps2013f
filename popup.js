@@ -71,6 +71,7 @@ document.addEventListener('DOMContentLoaded', function () {
 			page.removeCategory(xID.slice(0, -1));
 			displayGroups(page);
 		});
+		addUncheck();
 	});
 
 
