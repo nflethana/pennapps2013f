@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', function () {
 	    		}
 	    	});
 	    }
-	}
+	  }
 
 		displayGroups = function(page){
 			console.log(page.categories);
@@ -48,15 +48,13 @@ document.addEventListener('DOMContentLoaded', function () {
     	// 	var tab = tabs[0];
     	// 	console.log(tab);
     	// });
-      console.log("displaying groups");
-      displayGroups(page);
-    	var checkedCategories = [];
+
+    	var categories = [];
 
     	console.log("yo");
 
     	chrome.tabs.getSelected(null, function(tab) {
-    		page.addTab(tab, checkedCategories);
-
+    		// page.addTab(tab, categories);
     	});
     });
   });

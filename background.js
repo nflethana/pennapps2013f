@@ -14,41 +14,55 @@ chrome.storage.local.get('categories',function(result){
 		window.categories = [];
 	}
 });
-
-
-addTab = function(tab, categories){
-	for (var i = 0; i < categories.length; i++) {
-		if(window.currentTabs[categories[i]]){
-			window.currentTabs[categories[i]].push(tab);
-		}
-	}
-	saveTabs();
-}
 /*
 window.domainlist is an object of the same format as currenttabs,
 however it stores the domains associated with each group for auto-categorizing
 */
 chrome.storage.local.get('domainList',function(result){
 	if(result.domainList){
-		window.domainList = result.domainLiset;
+		window.domainList = result.domainList;
 	} else {
 		window.domainList = {};
 	}
 });
-
-findCategory = function(tabID){
-	for(category in window.currentTabs){
-		for(var i=0;i<currentTabs[category].length;i++){
-			if (tabID==currentTabs[category][i].id) return category;
+addDomain = function(url,addCategories){
+	var hostname = getHostname(url);
+	for (var i = 0; i < categories.length; i++) {
+		if(window.domainList[addCategories[i]].indexOf(hostname)==-1){
+			window.domainList[addCategories]
+		}
+}
+addTab = function(tab, addCategories){
+	var currentCats = findCategories(tab.id);
+	for (var i = 0; i < addCategories.length; i++) {
+		if(currentCats.indexOf(addCategories[i])==-1){
+			if()
+			window.currentTabs[addCategories[i]].push(tab);
 		}
 	}
-	return null;
+	saveTabs();
+}
+findCategories = function(tabID){
+	var found = [];
+	for(category in window.currentTabs){
+		for(var i=0;i<currentTabs[category].length;i++){
+			if (tabID==currentTabs[category][i].id) found.push(category);
+		}
+	}
+	return found;
 }
 
 openTabs = function(category){
 	for(var i=0; i<window.currentTabs[category].length;i++){
-		chrome.tabs.create({url:window.currentTabs[category][i].url});
+		chrome.tabs.create({url:window.currentTabs[category][i].url},function(newTab){
+			window.currentTabs[category][i]=newTab;
+		});
 	}
+}
+removeCategory = function(categoryName){
+	window.categories.splice(window.categories.indexOf(categoryName),1);
+	delete window.currentTabs[categoryName];
+	delete window.domainList[categoryName];
 }
 addCategory = function(categoryName) {
 	if (window.categories.indexOf(categoryName)==-1){
@@ -61,7 +75,15 @@ addCategory = function(categoryName) {
 	}
 	
 }
-
+function getLocation(href) {
+    var l = document.createElement("a");
+    l.href = href;
+    return l;
+}
+function getHostname(url){
+	var l = getLocation(url);
+	return l.hostname;
+}
 function saveAll(){
  	saveCategories();
  	saveTabs();
