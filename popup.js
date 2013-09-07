@@ -14,7 +14,6 @@ document.addEventListener('DOMContentLoaded', function () {
       $('#createNewGroup').click(function() {
          createNewGroup();
      });
-
     //  Check to see if the user un-checks the group
     for (var i=0; i < page.categories.length; i++) {
     	$('#'+page.categories[i]).change(function() {
@@ -31,12 +30,16 @@ document.addEventListener('DOMContentLoaded', function () {
     		}
     	});
     }
+
     
     $('')
 
   });
 });
 
+
 function createNewGroup() {
-	self.location="../createNewGroup.html";
+	$("#groupName").css("display", "block");
+
 }
+
