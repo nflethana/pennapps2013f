@@ -49,13 +49,9 @@ document.addEventListener('DOMContentLoaded', function () {
           }
         }
         console.log(checkedCategories);
-
-
-
-        // chrome.tabs.getSelected(null, function(tab) {
-        //   page.addTab(tab, checkedCategories);
-        // });
-        checkedCategories=[];
+        chrome.tabs.getSelected(null, function(tab) {
+          page.addTab(tab, checkedCategories);
+        });
         $tabsBlock.css("display", "none");
 
     });
