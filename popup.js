@@ -5,15 +5,8 @@ document.addEventListener('DOMContentLoaded', function () {
     });
     console.log(page.categories);
 
-  displayGroups = function(){
-  	var $list = $('#group-block');  
-    for (var i=0;i<page.categories.length;i++){
-      $list.append('<input type="checkbox" id="'+page.categories[i]+'" name="'+page.categories[i]+'" checked></input><label>'+page.categories[i]+'</label><br>');
-    }
-  }
-      $('#createNewGroup').click(function() {
-         createNewGroup();
-     });
+
+      
     //  Check to see if the user un-checks the group
     for (var i=0; i < page.categories.length; i++) {
     	$('#'+page.categories[i]).change(function() {
@@ -32,14 +25,18 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     
-    $('')
+    
 
   });
 });
-
-
-function createNewGroup() {
-	$("#groupName").css("display", "block");
-
+displayGroups = function(page){
+	console.log(page.categories);
+	var $list = $('#group-block');
+  for (var i=0;i<page.categories.length;i++){
+  	console.log('appending' + i);
+    $list.append('<input type="checkbox" id="'+page.categories[i]+'" name="'+page.categories[i]+'" checked></input><label>'+page.categories[i]+'</label><br>');
+  }
 }
+	
+
 

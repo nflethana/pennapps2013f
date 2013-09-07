@@ -65,7 +65,7 @@ function saveCategories(){
 	});
 }
 function saveTabs(){
-	chrome.storage.local.set({"currenttabs":currenttabs},function(){
+	chrome.storage.local.set({"currentTabs":currentTabs},function(){
 		console.log('tab storage done');
 	});
 }
