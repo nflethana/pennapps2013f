@@ -25,6 +25,19 @@ document.addEventListener('DOMContentLoaded', function () {
 	    }
 	}
 
+	$('.plusButton').click(function(){
+		var groupName = $('#newGroupName').val();
+		if (groupName.length > 0){
+			page.addCategory(groupName);
+			$('#newGroupName').val('');
+			$('#group-block').append('<div class="checkbox"><label class="groupLabel"><input type="checkbox" id="'+groupName+'" name="'+groupName+'" checked>'+groupName+'</label><a class="anchorX" href="#"><span class="deleteX"><i class="icon-remove"></i></span></a></div>');
+		}
+	});
+
+	$('.deleteX').click(function(){
+		console.log('clicked this shit');
+	});
+
 		displayGroups = function(page){
 			console.log(page.categories);
 			var $list = $('#group-block');
@@ -38,6 +51,8 @@ document.addEventListener('DOMContentLoaded', function () {
     // Add functionality for Add current tab to...
     
     $('#submitAddTab').click(function() {
+
+      console.log(page.currentTabs);
         var checkedCategories = [];
         var $tabsBlock = $('#addTabBlock');
         for (var i = 0; i < page.categories.length; i++) {
@@ -47,12 +62,13 @@ document.addEventListener('DOMContentLoaded', function () {
           }
         }
 
+
+        chrome.tabs.getSelected(null, function(tab) {
+           page.addTab(tab, checkedCategories);
+         });
+
         console.log(page.currentTabs);
 
-        // chrome.tabs.getSelected(null, function(tab) {
-        //   page.addTab(tab, checkedCategories);
-        // });
-        checkedCategories=[];
         $tabsBlock.css("display", "none");
 
     });
@@ -79,13 +95,7 @@ document.addEventListener('DOMContentLoaded', function () {
         $tabsList.append('<li class="checkbox"><label><input type="checkbox" id="att'+page.categories[i]+'" name="'+page.categories[i]+'" unchecked>'+page.categories[i]+'</label></li>');
       }
       
-
       $tabsBlock.css("display","block");
-
-    	// chrome.tabs.getSelected(null, function(tab) {
-    	// 	page.addTab(tab, checkedCategories);
-
-    	// });
 
     	});
 
@@ -99,6 +109,10 @@ document.addEventListener('DOMContentLoaded', function () {
     	chrome.alarms.onAlarm.addListener(function(alarm) {
     		console.log("alarm sounded!");
     	});
+<<<<<<< HEAD
+=======
+
+>>>>>>> 0cbe6a021e6b64a8f526c06c2674cc97800d6131
     });
   });
 });
