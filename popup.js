@@ -4,13 +4,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
     });
     console.log(page.categories);
-    var $list = $('#group-block');
-    for (var i=0;i<page.categories.length;i++){
-      $list.append('<input type="checkbox" id="'+page.categories[i]+'" name="'+page.categories[i]+'" checked></input><label>'+page.categories[i]+'</label><br>');
-    }
-      $('#createNewGroup').click(function() {
-         createNewGroup();
-     });
+
+
+      
     //  Check to see if the user un-checks the group
     for (var i=0; i < page.categories.length; i++) {
     	$('#'+page.categories[i]).change(function() {
@@ -28,12 +24,34 @@ document.addEventListener('DOMContentLoaded', function () {
     	});
     }
 
+		displayGroups = function(page){
+			console.log(page.categories);
+			var $list = $('#group-block');
+		  for (var i=0;i<page.categories.length;i++){
+		  	console.log('appending' + i);
+		    $list.append('<input type="checkbox" id="'+page.categories[i]+'" name="'+page.categories[i]+'" checked></input><label>'+page.categories[i]+'</label><br>');
+		  }
+		}
+
+    // Add functionality for Add current tab to...
+    $('#addCurrentTabTo').click(function() {
+    	// chrome.tabs.query({
+    	// 	active: true,
+    	// 	lastFocusedWindow: true
+    	// }, function(tabs) {
+    	// 	console.log(tabs);
+    	// 	var tab = tabs[0];
+    	// 	console.log(tab);
+    	// });
+
+    	var categories = [];
+
+    	console.log("yo");
+
+    	chrome.tabs.getSelected(null, function(tab) {
+    		page.addTab(tab, categories);
+    	});
+    });
+
   });
 });
-
-
-function createNewGroup() {
-	$("#groupName").css("display", "block");
-
-}
-

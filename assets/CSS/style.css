@@ -4,6 +4,7 @@ body {
 }
 
 #group-block {
+	clear:right;
 	margin: 5px;
 	width: 150px;
 }
