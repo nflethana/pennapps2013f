@@ -3,26 +3,48 @@ document.addEventListener('DOMContentLoaded', function () {
     console.log(page);
 
     console.log(page.categories);
+
+    displayGroups = function(page){
+			console.log(page.categories);
+			var $list = $('#group-block');
+			$list.html('');
+		  for (var i=0;i<page.categories.length;i++){
+		  	var checked;
+		  	if (page.checkedCategories[page.categories[i]]) {
+		  		checked = "checked";
+		  	} else {
+		  		checked = "unchecked";
+		  	}
+		  	console.log('appending' + i);
+		    $list.append('<div class="checkbox"><label class="groupLabel"><input type="checkbox" id="'+page.categories[i]+'" name="'+page.categories[i]+'" '+checked+'>'+page.categories[i]+'</label><a href="#"><span class="deleteX"><i class="icon-remove"></i></span></a></div>');
+		  }
+		}
+		displayGroups(page);
+		addUncheck();
       
-    //  Check to see if the user un-checks the group
-    if (typeof page.categories != "undefined") {
+      function addUncheck() {
+	    //  Check to see if the user un-checks the group
 	    for (var i=0; i < page.categories.length; i++) {
-	    	$('#'+page.categories[i]).change(function() {
+	    	var category = page.categories[i];
+	    	$('#'+category).change(function() {
 	    		if (!this.checked) {
 	    			console.log("in popup.js");
 	    			var tabIds = [];
-	    			var tabs = page.currentTabs[page.categories[i]];
-	    			if(typeof tabs != "undefined") {
-	    				for(var i = 0; i < tabs.length; i++) {
-	    					tabIds.push(tabs[i].id);
-	    				}
-	    			}
-	    			chrome.tabs.remove(tabIds, function() {
+	    			console.log(page.currentTabs);
+	    			var tabs = page.currentTabs[category];
+	    			console.log(tabs);
+    				for(var i = 0; i < tabs.length; i++) {
+    					console.log("In here");
+    					tabIds.push(tabs[i].id);
+    				}
+    				if (tabIds.length > 0) {
+		    			chrome.tabs.remove(tabIds, function() {
 
-	    			});
+		    			});
+	    			}
 	    		} else {
-            page.openTabs(this.id);
-          }
+	        		page.openTabs(this.id);
+	     		 }
 	    	});
 	    }
 	  }
@@ -34,22 +56,13 @@ document.addEventListener('DOMContentLoaded', function () {
 			$('#newGroupName').val('');
 			$('#group-block').append('<div class="checkbox"><label class="groupLabel"><input type="checkbox" id="'+groupName+'" name="'+groupName+'" checked>'+groupName+'</label><a class="anchorX" href="#"><span class="deleteX"><i class="icon-remove"></i></span></a></div>');
 		}
+		addUncheck();
 	});
 
 	$('.deleteX').click(function(){
 		console.log('clicked this shit');
 	});
 
-		displayGroups = function(page){
-			console.log(page.categories);
-			var $list = $('#group-block');
-			$list.html('');
-		  for (var i=0;i<page.categories.length;i++){
-		  	console.log('appending' + i);
-		    $list.append('<div class="checkbox"><label class="groupLabel"><input type="checkbox" id="'+page.categories[i]+'" name="'+page.categories[i]+'" checked>'+page.categories[i]+'</label><a href="#"><span class="deleteX"><i class="icon-remove"></i></span></a></div>');
-		  }
-		}
-		displayGroups(page);
     // Add functionality for Add current tab to...
     
     $('#submitAddTab').click(function() {

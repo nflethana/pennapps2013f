@@ -4,6 +4,20 @@ categories and whose values are the current tabs open under that category
 */
 window.currentTabs={};
 
+window.categoriesChecked={};
+
+function uncheckCategory(category) {
+	if (window.categoriesChecked[category]) {
+		window.categoriesChecked[category] = false;
+	}
+}
+
+function checkCategory(category) {
+	if (!window.categoriesChecked[category]) {
+		window.categoriesChecked[category] = true;
+	}
+}
+
 /* 
 categories is just an array with all the category names in it
 */
@@ -71,12 +85,14 @@ removeCategory = function(categoryName){
 	window.categories.splice(window.categories.indexOf(categoryName),1);
 	delete window.currentTabs[categoryName];
 	delete window.domainList[categoryName];
+	delete window.categoriesChecked[categoryName];
 }
 addCategory = function(categoryName) {
 	if (window.categories.indexOf(categoryName)==-1){
 		window.categories.push(categoryName);
 		window.currentTabs[categoryName]=[];
 		window.domainList[categoryName]=[];
+		window.categoriesChecked[categoryName]=true;
 		saveAll();
 		console.log(categoryName + " added");
 		console.log(categories);
