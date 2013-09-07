@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', function () {
 		}
 	});
 
-	$('.deleteX').click(function(){
+	$('.anchorX').click(function(){
 		console.log('clicked this shit');
 	});
 
