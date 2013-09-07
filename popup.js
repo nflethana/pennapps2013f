@@ -4,10 +4,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
     });
     console.log(page.categories);
-    var $list = $('#group-block');
+
+  displayGroups = function(){
+  	var $list = $('#group-block');  
     for (var i=0;i<page.categories.length;i++){
       $list.append('<input type="checkbox" id="'+page.categories[i]+'" name="'+page.categories[i]+'" checked></input><label>'+page.categories[i]+'</label><br>');
     }
+  }
       $('#createNewGroup').click(function() {
          createNewGroup();
      });
@@ -29,6 +32,8 @@ document.addEventListener('DOMContentLoaded', function () {
     	});
     }
     
+    $('')
+
   });
 });
 
