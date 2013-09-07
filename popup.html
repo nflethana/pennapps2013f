@@ -3,35 +3,18 @@
   <head>
     <title>Getting Started Extension's Popup</title>
     <link href="dependencies/css/bootstrap.min.css" rel="stylesheet" />
-    <style>
-      body {
-        min-width: 357px;
-        overflow-x: hidden;
-      }
+    <link href="assets/css/style.css" rel="stylesheet" />
+    	<form action="">
+	      <label class="checkbox">
+	      	<input type="checkbox" name="groups" value="G1">Homework<br>
+	      </label>
+	      <label class="checkbox">
+	      	<input type="checkbox" name="groups" value="G2">Porn
+	      </label>
+	    </form>
 
-      img {
-        margin: 5px;
-        border: 2px solid black;
-        vertical-align: middle;
-        width: 75px;
-        height: 75px;
-      }
-    </style>
-
-    <form action="">
-      <label class="checkbox">
-      	<input type="checkbox" name="groups" value="G1">Homework<br>
-      </label>
-      <label class="checkbox">
-      	<input type="checkbox" name="groups" value="G2">Porn
-      </label>
-    </form>
-
-    <button type="button" class="btn btn-default btn-lg btn-block">Add tab to...</button>
-    <button type="button" class="btn btn-default btn-lg btn-block" onclick="createNewGroup()">
-    Add new Group...</button>
-    <button type="button" class="btn btn-default btn-lg btn-block">Add reminder to page...</button>
-
+	    <button type="button" class="btn btn-primary btn-lg btn-block">Add tab to...</button>
+	    <button type="button" class="btn btn-primary btn-lg btn-block" onclick="createNewGroup()">Add new Group...</button>
 
     <!--
       - JavaScript and HTML must be in separate files: see our Content Security
@@ -41,7 +24,6 @@
      -->
     <script src="dependencies/js/bootstrap.min.js"></script> 
     <script src="dependencies/js/jquery.js"></script>
-
     <script src="popup.js"></script>
   </head>
 </html>
