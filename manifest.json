@@ -19,6 +19,6 @@
   } ],
   "permissions": [
     "tabs", 
-    "http://*/*", "https://*/*", "<all_url>", "background"
+    "http://*/*", "https://*/*", "<all_urls>", "background"
   ]
 }
