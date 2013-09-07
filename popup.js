@@ -3,6 +3,8 @@ document.addEventListener('DOMContentLoaded', function () {
   ptag.innerHTML = "skl;sdfjlasl;kdfjsadl;k";
   document.body.appendChild(ptag);
   createNewGroup();
+  console.log('wooooooo');
+  chrome.extension.getBackgroundPage().console.log('foo');
 });
 
 function createNewGroup() {
