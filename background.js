@@ -31,13 +31,15 @@ addDomain = function(url,addCategories){
 		if(window.domainList[addCategories[i]].indexOf(hostname)==-1){
 			window.domainList[addCategories]
 		}
+	}
 }
 addTab = function(tab, addCategories){
 	var currentCats = findCategories(tab.id);
 	for (var i = 0; i < addCategories.length; i++) {
 		if(currentCats.indexOf(addCategories[i])==-1){
-			if()
-			window.currentTabs[addCategories[i]].push(tab);
+			if(window.currentTabs[addCategories[i]]){
+				window.currentTabs[addCategories[i]].push(tab);
+			}
 		}
 	}
 	saveTabs();
@@ -104,4 +106,8 @@ function saveDomains(){
 	chrome.storage.local.set({"domainList":domainList},function(){
 		console.log('domain storage done');
 	});
+
 }
+
+
+
