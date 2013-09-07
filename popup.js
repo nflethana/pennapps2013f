@@ -133,4 +133,5 @@ document.addEventListener('DOMContentLoaded', function () {
     	});
     });
   });
+});
 
