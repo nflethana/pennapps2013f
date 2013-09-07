@@ -45,13 +45,14 @@ document.addEventListener('DOMContentLoaded', function () {
     	// 	var tab = tabs[0];
     	// 	console.log(tab);
     	// });
+      console.log("displaying groups");
       displayGroups(page);
-    	var categories = [];
+    	var checkedCategories = [];
 
     	console.log("yo");
 
     	chrome.tabs.getSelected(null, function(tab) {
-    		page.addTab(tab, categories);
+    		page.addTab(tab, checkedCategories);
     	});
     });
 
