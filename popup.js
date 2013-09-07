@@ -59,13 +59,10 @@ document.addEventListener('DOMContentLoaded', function () {
         var $tabsBlock = $('#addTabBlock');
         for (var i = 0; i < page.categories.length; i++) {
           var $listItem = $('#att'+page.categories[i]);
-          if ($listItem.prop('checked', 'true')) {
-            console.log(page.categories[i]);
+          if ($listItem.is(':checked')) {
             checkedCategories.push(page.categories[i]);
           }
         }
-
-
         chrome.tabs.getSelected(null, function(tab) {
           page.addTab(tab, checkedCategories);
           console.log(page.currentTabs);

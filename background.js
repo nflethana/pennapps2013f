@@ -13,7 +13,13 @@ chrome.storage.local.get('categories',function(result){
 	} else {
 		window.categories = [];
 	}
+	for(var i=0;i<window.categories.length;i++){
+		if(typeof window.currentTabs[window.categories[i]]== "undefined"){
+			window.currentTabs[window.categories[i]]=[];
+		}
+	}
 });
+
 /*
 window.domainlist is an object of the same format as currenttabs,
 however it stores the domains associated with each group for auto-categorizing
@@ -34,14 +40,14 @@ addDomain = function(url,addCategories){
 	}
 }
 addTab = function(tab, addCategories){
+	console.log(currentTabs.blah2);
 	var currentCats = findCategories(tab.id);
 	for (var i = 0; i < addCategories.length; i++) {
 		if(currentCats.indexOf(addCategories[i])==-1){
-			if(window.currentTabs[addCategories[i]]){
-				window.currentTabs[addCategories[i]].push(tab);
-			}
+			window.currentTabs[addCategories[i]].push(tab);
 		}
 	}
+	console.log(currentTabs.blah2);
 	saveTabs();
 }
 findCategories = function(tabID){
