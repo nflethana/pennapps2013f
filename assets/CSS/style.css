@@ -4,7 +4,20 @@ body {
 }
 
 #group-block {
+	clear:right;
 	margin: 5px;
 	width: 150px;
 }
 
+#groupName {
+	display:none;
+}
+
+#newGroupName {
+	float:right;
+}
+
+.plusButton {
+	float:right;
+	margin:5px;
+}

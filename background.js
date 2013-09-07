@@ -1,4 +1,3 @@
-
 /*
 window.currenttabs is an object whose keys are the different tab
 categories and whose values are the current tabs open under that category
@@ -17,9 +16,11 @@ chrome.storage.local.get('categories',function(result){
 });
 
 
-addTab = function(tab,category){
-	if(window.currentTabs[category]){
-		window.currentTabs[category].push(tab);
+addTab = function(tab, categories){
+	for (int i = 0; i < categories.length; i++) {
+		if(window.currentTabs[categories[i]]){
+			window.currentTabs[categories[i]].push(tab);
+		}
 	}
 	saveTabs();
 }
