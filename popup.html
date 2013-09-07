@@ -3,6 +3,7 @@
   <head>
     <title>Getting Started Extension's Popup</title>
     <link href="dependencies/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="assets/css/style.css" rel="stylesheet" />
     <style>
       body {
         min-width: 357px;
@@ -18,6 +19,19 @@
       }
     </style>
 
+    <form action="">
+      <label class="checkbox">
+      	<input type="checkbox" name="groups" value="G1">Homework<br>
+      </label>
+      <label class="checkbox">
+      	<input type="checkbox" name="groups" value="G2">Porn
+      </label>
+    </form>
+
+    <button type="button" class="btn btn-primary btn-lg btn-block">Add tab to...</button>
+    <button type="button" class="btn btn-primary btn-lg btn-block" onclick="createNewGroup()">Add new Group...</button>
+
+
     <!--
       - JavaScript and HTML must be in separate files: see our Content Security
       - Policy documentation[1] for details and explanation.
@@ -26,11 +40,7 @@
      -->
     <script src="dependencies/js/bootstrap.min.js"></script> 
     <script src="dependencies/js/jquery.js"></script>
-
     <script src="popup.js"></script>
   </head>
-  <body>
-    <p id="bleh">hello world</p>
-  </body>
 </html>
 
