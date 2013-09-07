@@ -38,6 +38,8 @@ document.addEventListener('DOMContentLoaded', function () {
     // Add functionality for Add current tab to...
     
     $('#submitAddTab').click(function() {
+
+      console.log(page.currentTabs);
         var checkedCategories = [];
         var $tabsBlock = $('#addTabBlock');
         for (var i = 0; i < page.categories.length; i++) {
@@ -48,12 +50,12 @@ document.addEventListener('DOMContentLoaded', function () {
         }
         console.log(checkedCategories);
 
+        chrome.tabs.getSelected(null, function(tab) {
+           page.addTab(tab, checkedCategories);
+         });
+       console.log(page.currentTabs);
 
 
-        // chrome.tabs.getSelected(null, function(tab) {
-        //   page.addTab(tab, checkedCategories);
-        // });
-        checkedCategories=[];
         $tabsBlock.css("display", "none");
 
     });
@@ -80,13 +82,7 @@ document.addEventListener('DOMContentLoaded', function () {
         $tabsList.append('<li class="checkbox"><label><input type="checkbox" id="att'+page.categories[i]+'" name="'+page.categories[i]+'" unchecked>'+page.categories[i]+'</label></li>');
       }
       
-
       $tabsBlock.css("display","block");
-
-    	// chrome.tabs.getSelected(null, function(tab) {
-    	// 	page.addTab(tab, checkedCategories);
-
-    	// });
 
     	});
 
@@ -100,7 +96,7 @@ document.addEventListener('DOMContentLoaded', function () {
     	chrome.alarms.onAlarm.addListener(function(alarm) {
     		console.log("alarm sounded!");
     	});
-\
+
     });
   });
 });
