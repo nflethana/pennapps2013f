@@ -60,13 +60,14 @@ document.addEventListener('DOMContentLoaded', function () {
         for (var i = 0; i < page.categories.length; i++) {
           var $listItem = $('#att'+page.categories[i]);
           if ($listItem.prop('checked', 'true')) {
+            console.log(page.categories[i]);
             checkedCategories.push(page.categories[i]);
           }
         }
         console.log(checkedCategories);
 
         chrome.tabs.getSelected(null, function(tab) {
-           page.addTab(tab, checkedCategories);
+          page.addTab(tab, checkedCategories);
           console.log(page.currentTabs);
          });
       
