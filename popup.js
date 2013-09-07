@@ -39,8 +39,12 @@ document.addEventListener('DOMContentLoaded', function () {
     	// 	console.log(tab);
     	// });
 
-    	chrome.tabs.getSelected(function(tab) {
-    		console.log(tab);
+    	var categories = [];
+
+    	console.log("yo");
+
+    	chrome.tabs.getSelected(null, function(tab) {
+    		page.addTab(tab, categories);
     	});
     });
 
@@ -52,4 +56,3 @@ function createNewGroup() {
 	$("#groupName").css("display", "block");
 
 }
-
