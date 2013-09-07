@@ -38,6 +38,7 @@ body {
 .deleteX {
 	float: right;
 	position: relative;
+	line-height: 100%;
 }
 
 .deleteX:active {
