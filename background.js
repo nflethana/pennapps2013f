@@ -27,25 +27,33 @@ addTab = function(tab,category){
 window.domainlist is an object of the same format as currenttabs,
 however it stores the domains associated with each group for auto-categorizing
 */
-chrome.storage.local.get('domainlist',function(result){
-	if(result.domainlist){
-		window.domainlist = result.domainlist;
+chrome.storage.local.get('domainList',function(result){
+	if(result.domainList){
+		window.domainList = result.domainList;
 	} else {
-		window.domainlist = {};
+		window.domainList = {};
 	}
 });
 
+findCategory = function(tabID){
+	for(category in window.currentTabs){
+		for(var i=0;i<currentTabs[category].length;i++){
+			if (tabID==currentTabs[category][i].id) return category;
+		}
+	}
+	return null;
+}
 
 openTabs = function(category){
 	for(var i=0; i<window.currentTabs[category].length;i++){
-		chrome.tabs.create(window.currentTabs[category][i]);
+		chrome.tabs.create({window.currentTabs[category][i]);
 	}
 }
 addCategory = function(categoryName) {
 	if (window.categories.indexOf(categoryName)==-1){
 		window.categories.push(categoryName);
 		window.currentTabs[categoryName]=[];
-		window.domainlist[categoryName]=[];
+		window.domainList[categoryName]=[];
 		saveAll();
 		console.log(categoryName + " added");
 		console.log(categories);
