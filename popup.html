@@ -4,24 +4,6 @@
     <title>Getting Started Extension's Popup</title>
     <link href="dependencies/css/bootstrap.min.css" rel="stylesheet" />
     <link href="assets/css/style.css" rel="stylesheet" />
-    	
-    	<div id="group-block">
-	    	<form action="">
-		      <label class="checkbox">
-		      	<input type="checkbox" name="groups" value="G1">Homework
-		      </label>
-		      <label class="checkbox">
-		      	<input type="checkbox" name="groups" value="G2">Porn
-		      </label>
-		      <label class="checkbox">
-		      	<input type="checkbox" name="groups" value="G3">Criminal Activity
-		      </label>
-		    </form>
-		  </div>
-
-	    <button type="button" class="btn btn-primary btn-lg btn-block" id="addTab">Add tab to...</button>
-	    <button type="button" class="btn btn-primary btn-lg btn-block" id="addGroup">Add new Group...</button>
-      <button type="button" class="btn btn-primary btn-lg btn-block" id="addReminder">Add Reminder to Page...</button>
 
     <!--
       - JavaScript and HTML must be in separate files: see our Content Security
@@ -33,5 +15,24 @@
     <script src="dependencies/js/jquery.js"></script>
     <script src="popup.js"></script>
   </head>
+  <body>
+    <div id="group-block">
+        <form action="">
+          <label class="checkbox">
+            <input type="checkbox" name="groups" value="G1">Homework
+          </label>
+          <label class="checkbox">
+            <input type="checkbox" name="groups" value="G2">Porn
+          </label>
+          <label class="checkbox">
+            <input type="checkbox" name="groups" value="G3">Criminal Activity
+          </label>
+        </form>
+      </div>
+
+      <button type="button" class="btn btn-primary btn-lg btn-block">Add tab to...</button>
+      <button type="button" id="createNewGroup" class="btn btn-primary btn-lg btn-block">Add new Group...</button>
+      <button type="button" class="btn btn-primary btn-lg btn-block">Add Reminder to Page...</button>
+  </body>
 </html>
 
