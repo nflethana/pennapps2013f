@@ -17,7 +17,7 @@ chrome.storage.local.get('categories',function(result){
 
 
 addTab = function(tab, categories){
-	for (int i = 0; i < categories.length; i++) {
+	for (var i = 0; i < categories.length; i++) {
 		if(window.currentTabs[categories[i]]){
 			window.currentTabs[categories[i]].push(tab);
 		}
@@ -28,25 +28,33 @@ addTab = function(tab, categories){
 window.domainlist is an object of the same format as currenttabs,
 however it stores the domains associated with each group for auto-categorizing
 */
-chrome.storage.local.get('domainlist',function(result){
-	if(result.domainlist){
-		window.domainlist = result.domainlist;
+chrome.storage.local.get('domainList',function(result){
+	if(result.domainList){
+		window.domainList = result.domainLiset;
 	} else {
-		window.domainlist = {};
+		window.domainList = {};
 	}
 });
 
+findCategory = function(tabID){
+	for(category in window.currentTabs){
+		for(var i=0;i<currentTabs[category].length;i++){
+			if (tabID==currentTabs[category][i].id) return category;
+		}
+	}
+	return null;
+}
 
 openTabs = function(category){
 	for(var i=0; i<window.currentTabs[category].length;i++){
-		chrome.tabs.create(window.currentTabs[category][i]);
+		chrome.tabs.create({url:window.currentTabs[category][i].url});
 	}
 }
 addCategory = function(categoryName) {
 	if (window.categories.indexOf(categoryName)==-1){
 		window.categories.push(categoryName);
 		window.currentTabs[categoryName]=[];
-		window.domainlist[categoryName]=[];
+		window.domainList[categoryName]=[];
 		saveAll();
 		console.log(categoryName + " added");
 		console.log(categories);
@@ -71,7 +79,7 @@ function saveTabs(){
 	});
 }
 function saveDomains(){
-	chrome.storage.local.set({"domainlist":domainlist},function(){
+	chrome.storage.local.set({"domainList":domainList},function(){
 		console.log('domain storage done');
 	});
 }
