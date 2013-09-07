@@ -1,0 +1,9 @@
+body {
+  min-width: 357px;
+  overflow-x: hidden;
+}
+
+#group-block {
+	margin: 5px;
+	width: 150px;
+}
