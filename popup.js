@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', function () {
     console.log(page.categories);
 
 
+
       
     //  Check to see if the user un-checks the group
     for (var i=0; i < page.categories.length; i++) {
@@ -27,12 +28,13 @@ document.addEventListener('DOMContentLoaded', function () {
 		displayGroups = function(page){
 			console.log(page.categories);
 			var $list = $('#group-block');
+			$list.html('');
 		  for (var i=0;i<page.categories.length;i++){
 		  	console.log('appending' + i);
 		    $list.append('<input type="checkbox" id="'+page.categories[i]+'" name="'+page.categories[i]+'" checked></input><label>'+page.categories[i]+'</label><br>');
 		  }
 		}
-
+		displayGroups(page);
     // Add functionality for Add current tab to...
     $('#addCurrentTabTo').click(function() {
     	// chrome.tabs.query({
