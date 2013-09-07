@@ -1,30 +1,32 @@
 document.addEventListener('DOMContentLoaded', function () {
   chrome.runtime.getBackgroundPage(function(page){
     console.log(page);
-    chrome.tabs.getSelected(function(tab){
 
-    });
     console.log(page.categories);
 
 
 
       
     //  Check to see if the user un-checks the group
-    for (var i=0; i < page.categories.length; i++) {
-    	$('#'+page.categories[i]).change(function() {
-    		if (!this.checked) {
-    			console.log("in popup.js");
-    			var tabIds = [];
-    			var tabs = page.currentTabs.get(page.categories[i]);
-    			for(var i = 0; i < tabs.length; i++) {
-    				tabIds.push(tabs[i].id);
-    			}
-    			chrome.tabs.remove(tabIds, function() {
+    if (typeof page.categories != "undefined") {
+	    for (var i=0; i < page.categories.length; i++) {
+	    	$('#'+page.categories[i]).change(function() {
+	    		if (!this.checked) {
+	    			console.log("in popup.js");
+	    			var tabIds = [];
+	    			var tabs = page.currentTabs[page.categories[i]];
+	    			if(typeof tabs != "undefined") {
+	    				for(var i = 0; i < tabs.length; i++) {
+	    					tabIds.push(tabs[i].id);
+	    				}
+	    			}
+	    			chrome.tabs.remove(tabIds, function() {
 
-    			});
-    		}
-    	});
-    }
+	    			});
+	    		}
+	    	});
+	    }
+	}
 
 		displayGroups = function(page){
 			console.log(page.categories);
@@ -52,9 +54,8 @@ document.addEventListener('DOMContentLoaded', function () {
     	console.log("yo");
 
     	chrome.tabs.getSelected(null, function(tab) {
-    		page.addTab(tab, categories);
+    		// page.addTab(tab, categories);
     	});
     });
-
   });
 });
