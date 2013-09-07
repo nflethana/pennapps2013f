@@ -22,7 +22,21 @@ body {
 	display: inline-block;
 }
 
+#addTabBlock {
+	list-style:none;
+	display:none;
+}
+
 .plusButton {
+<<<<<<< HEAD
+	float:right;
+	margin:5px;
+}
+
+#submitAddTab, #cancelAddTab {
+	display: inline-block;
+	align:center;
+=======
 	float:left;
 	margin: 5px;
 	margin-left: 7px;
@@ -43,4 +57,5 @@ body {
 .deleteX:active {
 	top: 2px;
 	transition: 0.2s;
+>>>>>>> d5a22ca97d495da9d1e995da49c3e2bcb73cb840
 }
