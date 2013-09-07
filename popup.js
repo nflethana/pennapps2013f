@@ -20,7 +20,9 @@ document.addEventListener('DOMContentLoaded', function () {
 	    			chrome.tabs.remove(tabIds, function() {
 
 	    			});
-	    		}
+	    		} else {
+            page.openTabs(this.id);
+          }
 	    	});
 	    }
 	  }

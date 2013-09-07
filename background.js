@@ -29,7 +29,7 @@ addDomain = function(url,addCategories){
 	var hostname = getHostname(url);
 	for (var i = 0; i < categories.length; i++) {
 		if(window.domainList[addCategories[i]].indexOf(hostname)==-1){
-			window.domainList[addCategories]
+			window.domainList[addCategories[i]].push(hostname);
 		}
 	}
 }
