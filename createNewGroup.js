@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', function () {
   		if (groupName.length > 0){
   			page.addCategory(groupName);
   			$('#newGroupName').val('');
-  			displayGroups(page);
+  			$('#group-block').append('<div class="checkbox"><label class="groupLabel"><input type="checkbox" id="'+groupName+'" name="'+groupName+'" checked>'+groupName+'</label><a href="#"><span class="deleteX"><i class="icon-remove"></i></span></a></div>');
   		}
   	});
 

@@ -3,9 +3,6 @@ document.addEventListener('DOMContentLoaded', function () {
     console.log(page);
 
     console.log(page.categories);
-
-
-
       
     //  Check to see if the user un-checks the group
     if (typeof page.categories != "undefined") {
@@ -34,7 +31,7 @@ document.addEventListener('DOMContentLoaded', function () {
 			$list.html('');
 		  for (var i=0;i<page.categories.length;i++){
 		  	console.log('appending' + i);
-		    $list.append('<input type="checkbox" id="'+page.categories[i]+'" name="'+page.categories[i]+'" checked></input><label>'+page.categories[i]+'</label><br>');
+		    $list.append('<div class="checkbox"><label class="groupLabel"><input type="checkbox" id="'+page.categories[i]+'" name="'+page.categories[i]+'" checked>'+page.categories[i]+'</label><a href="#"><span class="deleteX"><i class="icon-remove"></i></span></a></div>');
 		  }
 		}
 		displayGroups(page);
@@ -84,13 +81,26 @@ document.addEventListener('DOMContentLoaded', function () {
       }
       
 
-
       $tabsBlock.css("display","block");
 
     	// chrome.tabs.getSelected(null, function(tab) {
     	// 	page.addTab(tab, checkedCategories);
 
     	// });
+
+    	});
+
+    //  Add functionality for Add reminder to current page
+    $('#addReminderToCurrentPage').click(function() {
+    	// add logic for adding a reminder...
+    	
+    	var alarmInfo = {};
+    	alarmInfo.when = Date.now() + 10;
+    	chrome.alarms.create("alarm1", alarmInfo);
+    	chrome.alarms.onAlarm.addListener(function(alarm) {
+    		console.log("alarm sounded!");
+    	});
+\
     });
   });
 });
