@@ -140,6 +140,22 @@ function displayGroups(page){
         var name = page.categories[i].replace(' ','_');
         $list.append('<div class="checkbox" id="top'+name+'"><label class="groupLabel"><input type="checkbox" id="'+name+'" name="'+name+'" '+checked+'>'+page.categories[i]+'</label><a href="#"><span class="deleteX" id="'+name+'x"><i class="icon-remove"></i></span></a></div>');
       }
+      for (var x in page.currentTabs){
+        var $div = $('#top'+x.replace(' ','_'));
+        $ul = $('<ul></ul>');
+        $div.after($ul);
+        for(var i=0;i<page.currentTabs[x].length;i++){
+          var $li = liFromTab(page.currentTabs[x][i]);
+          $ul.append($li);
+        }
+      }
+      $ung= $('#topUngrouped');
+      $ul = $('<ul></ul>');
+      $ung.after($ul);
+      for(var i=0;i<page.ungrouped.length;i++){
+        var $li = liFromTab(page.ungrouped[i]);
+        $ul.append($li);
+      }
       bindDeleteX(page);
     }
 function addUncheck(page) {
@@ -175,6 +191,6 @@ function addUncheck(page) {
     }
 }
 function liFromTab(tab){
-  $li = $('<li><img src="'+tab.favIconUrl+'"/><span class="tab-url"'+tab.url+'</span></li>');
+  $li = $('<li><img class="tab-icon" src="'+tab.favIconUrl+'"/>  '+tab.title+'</li>');
   return $li;
 }
