@@ -92,7 +92,7 @@ function bindDeleteX(page){
     console.log(xID.slice(0, -1));
     var realId= xID.slice(0,-1);
     page.removeCategory(realId);
-    $('#top'+realId).hide(,function(){
+    $('#top'+realId).hide(function(){
       $('#top'+realId).remove();
     });
     
