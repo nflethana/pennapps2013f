@@ -1,6 +1,6 @@
 //  Uncomment the following to clear the local storage
 //  Note:  You must also click reload on the extension on the Chrome extensions page
-chrome.storage.local.clear();
+// chrome.storage.local.clear();
 
 /*
 window.currenttabs is an object whose keys are the different tab
@@ -77,6 +77,7 @@ addDomain = function(url,addCategories){
 		}
 	}
 }
+
 addTab = function(tab, addCategory){
 	console.log(window.currentTabs);
 	// console.log(window.ungroupedTabs);
@@ -98,9 +99,10 @@ addTab = function(tab, addCategory){
 	// } else {
 	// select the new one
 		window.currentTabs[addCategory].push(tab);
-	}
+	// }
 	saveTabs();
 }
+
 findCategories = function(tabID){
 	var found = [];
 	for(category in window.currentTabs){
@@ -113,13 +115,17 @@ findCategories = function(tabID){
 
 openTabs = function(category){
 	for(var i=0; i<window.currentTabs[category].length;i++){
-		chrome.tabs.create({url:window.currentTabs[category][i].url},function(newTab){
+		chrome.tabs.create({url:window.currentTabs[category][i].url}, function(newTab){
 			saveNewTab(newTab);
 
 			// window.currentTabs[category][i]=newTab;
 		});
 	}
-	replaceOldTabs(category);
+	window.setTimeout(function() {
+		replaceOldTabs(category);
+	}, 1000);
+
+	// replaceOldTabs(category);
 }
 
 window.tabsBeingAdded = [];
