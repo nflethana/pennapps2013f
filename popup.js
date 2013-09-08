@@ -3,12 +3,22 @@ var dragId;
 document.addEventListener('DOMContentLoaded', function () {
   chrome.runtime.getBackgroundPage(function(page){
     chrome.tabs.query({},function(tabArr){
-      $('UngroupedTabs').attr('checked',page.categoriesChecked['Ungrouped']);
-      var newCurrentTabs = {};
+      console.log(page.categoriesChecked['Ungrouped']);
+      $('#UngroupedTabs').attr('checked',page.categoriesChecked['Ungrouped']);
+      newCurrentTabs={};
       for(x in page.currentTabs){
-        newCurrentTabs[x] = [];
+        newCurrentTabs[x]=[];
       }
-      var newUngrouped = [];
+      var newUngrouped=[];
+      for(var i=0;i<page.groupExits.length;i++){
+        if(page.groupExits[i]=='Ungrouped'){
+          newUngrouped=page.ungrouped;
+        } else{
+          newCurrentTabs[page.groupExits[i]]=page.currentTabs[page.groupExits[i]];
+        }
+      }
+
+     
       for(var i=0;i<tabArr.length;i++){
         var group = page.findInObj(tabArr[i].id,page.currentTabs);
         if(group!="Ungrouped"){
@@ -127,12 +137,14 @@ function addGroup(page){
       $('#wrapper' + groupName).droppable({accept: '.tab-draggable',
       	hoverClass: "ui-state-active",
         drop: function(event, ui){
+          console.log(dragging);
+          console.log($(this));
+          console.log($(this).attr("id"));
           var first = dragging.slice(3);
           var second = $(this).attr("id").slice(7).replace('_',' ');
           chrome.tabs.get(dragId,function(tab){
             console.log(page.categories);
             console.log(second);
-            console.log($(this).attr("id").slice(7));
             page.addTab(tab,second);
             refreshGroup(page,first);
             refreshGroup(page,second);
@@ -230,8 +242,7 @@ function addUncheck(page) {
       //  Check to see if the user un-checks the group
       for (var i=0; i < page.categories.length; i++) {
         var category = page.categories[i];
-
-          $('#'+category).change(function() {
+        $('#'+category).change(function() {
           var xcategory=$(this).attr('id');
           if (!this.checked) {
             console.log("in popup.js");
@@ -246,8 +257,9 @@ function addUncheck(page) {
               tabIds.push(tabs[i].id);
             }
             if (tabIds.length > 0) {
+              page.groupExits.push(xcategory);
               chrome.tabs.remove(tabIds, function() {
-
+              console.log(page.currentTabs[xcategory]);
               });
             }
           } else {
@@ -269,6 +281,7 @@ function addUncheck(page) {
           tabIds.push(tabs[i].id);
         }
         if (tabIds.length > 0) {
+          page.groupExits.push('Ungrouped');
           chrome.tabs.remove(tabIds, function() {
 
           });

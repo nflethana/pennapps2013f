@@ -6,6 +6,7 @@
 window.currenttabs is an object whose keys are the different tab
 categories and whose values are the current tabs open under that category
 */
+window.groupExits=[];
 window.currentTabs={};
 window.ungrouped=[];
 window.refreshGroups=false;
@@ -140,6 +141,7 @@ addTab = function(tab, addCategory){
 	if(!window.categoriesChecked[addCategory]){
 		chrome.tabs.remove(tab.id,function(){});
 	}
+	console.log(currentTabs);
 	saveTabs();
 }
 
