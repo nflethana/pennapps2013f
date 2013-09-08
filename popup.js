@@ -19,12 +19,7 @@ document.addEventListener('DOMContentLoaded', function () {
 		  	console.log('appending' + i);
 		    $list.append('<div class="checkbox"><label class="groupLabel"><input type="checkbox" id="'+page.categories[i]+'" name="'+page.categories[i]+'" '+checked+'>'+page.categories[i]+'</label><a href="#"><span class="deleteX" id="'+page.categories[i]+'x"><i class="icon-remove"></i></span></a></div>');
 		  }
-		  $('.deleteX').on('click', function(){
-		  	var xID = ($(this).attr('id'));
-		  	console.log(xID.slice(0, -1));
-		  	page.removeCategory(xID.slice(0, -1));
-		  	displayGroups(page);
-		  });
+		  bindDeleteX();
 		}
 		displayGroups(page);
 		addUncheck();
@@ -70,12 +65,7 @@ document.addEventListener('DOMContentLoaded', function () {
 			$('.checkbox').show('slow');
 		}
 
-		$('.deleteX').on('click', function(){
-			var xID = ($(this).attr('id'));
-			console.log(xID.slice(0, -1));
-			page.removeCategory(xID.slice(0, -1));
-			displayGroups(page);
-		});
+		bindDeleteX();
 		addUncheck();
 	});
 
@@ -142,4 +132,11 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 });
-
+function bindDeleteX(){
+  $('.deleteX').on('click', function(){
+    var xID = ($(this).attr('id'));
+    console.log(xID.slice(0, -1));
+    page.removeCategory(xID.slice(0, -1));
+    displayGroups(page);
+  });
+}

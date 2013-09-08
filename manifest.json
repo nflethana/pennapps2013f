@@ -2,7 +2,7 @@
   "manifest_version": 2,
 
   "name": "Tabs++",
-  "description": "This extension demonstrates a browser action with kittens.",
+  "description": "Organizes chrome tabs",
   "version": "1.0",
 
   "browser_action": {
