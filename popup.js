@@ -51,6 +51,7 @@ document.addEventListener('DOMContentLoaded', function () {
 		    			});
 	    			}
 	    		} else {
+	    			page.categoriesChecked[category] = true;
 	        		page.openTabs(this.id);
 	     		 }
 	    	});
