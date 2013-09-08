@@ -4,78 +4,21 @@ document.addEventListener('DOMContentLoaded', function () {
 
     console.log(page.categories);
 
-    function displayGroups(page){
-			console.log(page.categories);
-			var $list = $('#group-block');
-			$list.html('');
-		  for (var i=0;i<page.categories.length;i++){
-		  	var checked;
-		  	console.log(page.categoriesChecked);
-		  	if (page.categoriesChecked[page.categories[i]]) {
-		  		checked = "checked";
-		  	} else {
-		  		checked = "unchecked";
-		  	}
-		  	console.log('appending' + i);
-		    $list.append('<div class="checkbox"><label class="groupLabel"><input type="checkbox" id="'+page.categories[i]+'" name="'+page.categories[i]+'" '+checked+'>'+page.categories[i]+'</label><a href="#"><span class="deleteX" id="'+page.categories[i]+'x"><i class="icon-remove"></i></span></a></div>');
-		  }
-		  bindDeleteX();
-		}
+    
 		displayGroups(page);
-		addUncheck();
+		addUncheck(page);
       
-      function addUncheck() {
-	    //  Check to see if the user un-checks the group
-	    for (var i=0; i < page.categories.length; i++) {
-	    	var category = page.categories[i];
+      
 
-          $('#'+category).change(function() {
-	    		var xcategory=$(this).attr('id');
-          if (!this.checked) {
-	    			console.log("in popup.js");
-	    			page.categoriesChecked[xcategory] = false;
-	    			var tabIds = [];
-	    			console.log(page.currentTabs);
-	    			var tabs = page.currentTabs[xcategory];
-	    			console.log(tabs);
-    				for(var i = 0; i < tabs.length; i++) {
-    					console.log("In here");
-    					tabIds.push(tabs[i].id);
-    				}
-    				if (tabIds.length > 0) {
-		    			chrome.tabs.remove(tabIds, function() {
-
-		    			});
-	    			}
-	    		} else {
-	    			page.categoriesChecked[xcategory] = true;
-	        	page.openTabs(this.id);
-	     		 }
-	    	});
-
-	    }
-	  }
-
-	function addGroup(){
-		var groupName = $('#newGroupName').val();
-		if (groupName.length > 0){
-			page.addCategory(groupName);
-			$('#newGroupName').val('');
-			$('#group-block').append('<div class="checkbox" style="display:none;"><label class="groupLabel"><input type="checkbox" id="'+groupName+'" name="'+groupName+'" checked>'+groupName+'</label><a href="#"><span class="deleteX" id="'+groupName+'x"><i class="icon-remove"></i></span></a></div>');
-			$('.checkbox').show('slow');
-		}
-
-		bindDeleteX();
-		addUncheck();
-	}
+	
 
 		$('.plusButton').click(function(){
-			addGroup();
+			addGroup(page);
 		});
 
 		$('#newGroupName').keypress(function(e){
 			if (e.which == 13){
-				addGroup();
+				addGroup(page);
 			}
 		});
 
@@ -143,11 +86,72 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 });
-function bindDeleteX(){
-  $('.deleteX').on('click', function(){
+function bindDeleteX(page){
+  $('.deleteX').on('click', function(e){
     var xID = ($(this).attr('id'));
     console.log(xID.slice(0, -1));
-    page.removeCategory(xID.slice(0, -1));
-    displayGroups(page);
+    var realId= xID.slice(0,-1);
+    page.removeCategory(realId);
+    $('#top'+realId).remove();
   });
+}
+function addGroup(page){
+    var groupName = $('#newGroupName').val();
+    if (groupName.length > 0){
+      page.addCategory(groupName);
+      $('#newGroupName').val('');
+      $('#group-block').append('<div class="checkbox" id="top'+groupName+'" style="display:none;"><label class="groupLabel"><input type="checkbox" id="'+groupName+'" name="'+groupName+'" checked>'+groupName+'</label><a href="#"><span class="deleteX" id="'+groupName+'x"><i class="icon-remove"></i></span></a></div>');
+      $('.checkbox').show('slow');
+    }
+
+    bindDeleteX(page);
+    addUncheck(page);
+}
+function displayGroups(page){
+      console.log(page.categories);
+      var $list = $('#group-block');
+      $list.html('');
+      for (var i=0;i<page.categories.length;i++){
+        var checked;
+        console.log(page.categoriesChecked);
+        if (page.categoriesChecked[page.categories[i]]) {
+          checked = "checked";
+        } else {
+          checked = "unchecked";
+        }
+        console.log('appending' + i);
+        $list.append('<div class="checkbox" id="top'+page.categories[i]+'"><label class="groupLabel"><input type="checkbox" id="'+page.categories[i]+'" name="'+page.categories[i]+'" '+checked+'>'+page.categories[i]+'</label><a href="#"><span class="deleteX" id="'+page.categories[i]+'x"><i class="icon-remove"></i></span></a></div>');
+      }
+      bindDeleteX(page);
+    }
+function addUncheck(page) {
+      //  Check to see if the user un-checks the group
+      for (var i=0; i < page.categories.length; i++) {
+        var category = page.categories[i];
+
+          $('#'+category).change(function() {
+          var xcategory=$(this).attr('id');
+          if (!this.checked) {
+            console.log("in popup.js");
+            page.categoriesChecked[xcategory] = false;
+            var tabIds = [];
+            console.log(page.currentTabs);
+            var tabs = page.currentTabs[xcategory];
+            console.log(tabs);
+            for(var i = 0; i < tabs.length; i++) {
+              console.log("In here");
+              tabIds.push(tabs[i].id);
+            }
+            if (tabIds.length > 0) {
+              chrome.tabs.remove(tabIds, function() {
+
+              });
+            }
+          } else {
+            page.categoriesChecked[xcategory] = true;
+            page.openTabs(this.id);
+           }
+        });
+
+    }
 }
