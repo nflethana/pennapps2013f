@@ -1,13 +1,33 @@
 //  Uncomment the following to clear the local storage
 //  Note:  You must also click reload on the extension on the Chrome extensions page
-chrome.storage.local.clear();
+// chrome.storage.local.clear();
 
 /*
 window.currenttabs is an object whose keys are the different tab
 categories and whose values are the current tabs open under that category
 */
 window.currentTabs={};
-window.ungroupedTabs=getAllTabs();
+window.ungrouped=[];
+window.refreshGroups=false;
+chrome.tabs.query({},function(arr){
+	for(var i=0;i<arr.length;i++){
+		window.ungrouped[i]=arr[i];
+		console.log(window.ungrouped[i]);
+	}
+	console.log(window.ungrouped);
+	for(var i=0;i<window.ungrouped.length;i++){
+		var hostname = getHostname(window.ungrouped[i].url);
+		var a = findDomainCategory(hostname)
+		if(a){
+			var tab = window.ungrouped.splice(i,1);
+			addTab(tab,a);
+
+		}
+	}
+});
+// setTimeout(function(){
+// 	console.log(window.ungrouped);
+// },10);
 window.categoriesChecked={};
 
 function uncheckCategory(category) {
@@ -23,7 +43,8 @@ function checkCategory(category) {
 }
 function getAllTabs(){
 	chrome.tabs.query({},function(arr){
-		return arr;
+		console.log(arr);
+		return arr.slice(0);
 	});
 }
 function findinArray(tabId,arr){
@@ -40,7 +61,7 @@ chrome.storage.local.get('categories',function(result){
 	if(result.categories){
 		window.categories = result.categories;
 	} else {
-		window.categories = ['Ungrouped'];
+		window.categories = [];
 	}
 	for(var i=0;i<window.categories.length;i++){
 		if(typeof window.currentTabs[window.categories[i]]== "undefined"){
@@ -61,6 +82,14 @@ chrome.storage.local.get('domainList',function(result){
 		window.domainList = {};
 	}
 });
+function findDomainCategory(domain){
+	for (x in domainList){
+		for(var i=0;i<x.length;i++){
+			if (x[i]==domain) return x;
+		}
+	}
+	return null;
+}
 addDomain = function(url,addCategories){
 	var hostname = getHostname(url);
 	for (var i = 0; i < categories.length; i++) {
@@ -69,14 +98,15 @@ addDomain = function(url,addCategories){
 		}
 	}
 }
+
 addTab = function(tab, addCategory){
-	if 
-	var ung = findinArray(tab.id,ungroupedTabs);
+	console.log(window.currentTabs);
+	console.log(window.ungrouped);
+	//console.log(getAllTabs());
+	var ung = findinArray(tab.id,window.ungrouped);
 	if(ung>-1){
-		window.ungroupedTabs.splice(ung,1);
+		window.ungrouped.splice(ung,1);
 	}
-	var currentCats = findCategories(tab.id);
-	var notCategories = window.categories.slice(0);
 	// clear other categories
 	for(x in window.currentTabs){
 		for(var j=0;j<window.currentTabs[x].length;j++){
@@ -85,11 +115,15 @@ addTab = function(tab, addCategory){
 			}
 		}
 	}
+	if (addCategory=='Ungrouped'){
+		window.ungrouped.push(tab);
+	} else {
 	// select the new one
-	window.currentTabs[addCategory].push(tab);
-	
+		window.currentTabs[addCategory].push(tab);
+	// }
 	saveTabs();
 }
+
 findCategories = function(tabID){
 	var found = [];
 	for(category in window.currentTabs){
@@ -102,13 +136,17 @@ findCategories = function(tabID){
 
 openTabs = function(category){
 	for(var i=0; i<window.currentTabs[category].length;i++){
-		chrome.tabs.create({url:window.currentTabs[category][i].url},function(newTab){
+		chrome.tabs.create({url:window.currentTabs[category][i].url}, function(newTab){
 			saveNewTab(newTab);
 
 			// window.currentTabs[category][i]=newTab;
 		});
 	}
-	replaceOldTabs(category);
+	window.setTimeout(function() {
+		replaceOldTabs(category);
+	}, 1000);
+
+	// replaceOldTabs(category);
 }
 
 window.tabsBeingAdded = [];
