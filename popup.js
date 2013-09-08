@@ -18,13 +18,13 @@ document.addEventListener('DOMContentLoaded', function () {
 		  	}
 		  	console.log('appending' + i);
 		    $list.append('<div class="checkbox"><label class="groupLabel"><input type="checkbox" id="'+page.categories[i]+'" name="'+page.categories[i]+'" checked>'+page.categories[i]+'</label><a href="#"><span class="deleteX" id="'+page.categories[i]+'x"><i class="icon-remove"></i></span></a></div>');
-		    		  }
-		    		  $('.deleteX').on('click', function(){
-		    		  	var xID = ($(this).attr('id'));
-		    		  	console.log(xID.slice(0, -1));
-		    		  	page.removeCategory(xID.slice(0, -1));
-		    		  	displayGroups(page);
-		    		  });
+		  }
+		  $('.deleteX').on('click', function(){
+		  	var xID = ($(this).attr('id'));
+		  	console.log(xID.slice(0, -1));
+		  	page.removeCategory(xID.slice(0, -1));
+		  	displayGroups(page);
+		  });
 		}
 		displayGroups(page);
 		addUncheck();
