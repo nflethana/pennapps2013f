@@ -128,7 +128,7 @@ addTab = function(tab, addCategory){
 	} else {
 	// select the new one
 		window.currentTabs[addCategory].push(tab);
-	// }
+	}
 	saveTabs();
 }
 
