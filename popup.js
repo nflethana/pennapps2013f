@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 		displayGroups(page);
 		addUncheck(page);
+		
     function bindLeft(x){
     	$(x).on('click', function(){
 	    	$(this).addClass('down-caret');
@@ -109,8 +110,8 @@ function bindDeleteX(page){
     console.log(xID.slice(0, -1));
     var realId= xID.slice(0,-1);
     page.removeCategory(realId);
-    $('#top'+realId).hide(function(){
-      $('#top'+realId).remove();
+    $('#top'+realId.replace(' ','_')).hide(function(){
+      $('#top'+realId.replace(' ','_')).remove();
     });
     
   });
@@ -120,6 +121,7 @@ function addGroup(page){
     if (groupName.length > 0){
       page.addCategory(groupName);
       $('#newGroupName').val('');
+      groupName=groupName.replace(" ","_");
       $('#group-block').append('<div class="checkbox" id="top'+groupName+'" style="display:none;"><label class="groupLabel"><input type="checkbox" id="'+groupName+'" name="'+groupName+'" checked>'+groupName+'</label><a href="#"><span class="deleteX" id="'+groupName+'x"><i class="icon-remove"></i></span></a></div>');
       $('.checkbox').show('slow');
     }
@@ -140,7 +142,8 @@ function displayGroups(page){
           checked = "unchecked";
         }
         console.log('appending' + i);
-        $list.append('<div class="checkbox" id="top'+page.categories[i]+'"><label class="groupLabel"><input type="checkbox" id="'+page.categories[i]+'" name="'+page.categories[i]+'" '+checked+'>'+page.categories[i]+'</label><a href="#"><span class="deleteX" id="'+page.categories[i]+'x"><i class="icon-remove"></i></span></a></div>');
+        var name = page.categories[i].replace(' ','_');
+        $list.append('<div class="checkbox" id="top'+name+'"><label class="groupLabel"><input type="checkbox" id="'+name+'" name="'+name+'" '+checked+'>'+page.categories[i]+'</label><a href="#"><span class="deleteX" id="'+name+'x"><i class="icon-remove"></i></span></a></div>');
       }
       bindDeleteX(page);
     }
