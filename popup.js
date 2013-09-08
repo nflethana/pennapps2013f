@@ -66,7 +66,8 @@ document.addEventListener('DOMContentLoaded', function () {
 		if (groupName.length > 0){
 			page.addCategory(groupName);
 			$('#newGroupName').val('');
-			$('#group-block').append('<div class="checkbox"><label class="groupLabel"><input type="checkbox" id="'+groupName+'" name="'+groupName+'" checked>'+groupName+'</label><a href="#"><span class="deleteX" id="'+groupName+'x"><i class="icon-remove"></i></span></a></div>');
+			$('#group-block').append('<div class="checkbox" style="display:none;"><label class="groupLabel"><input type="checkbox" id="'+groupName+'" name="'+groupName+'" checked>'+groupName+'</label><a href="#"><span class="deleteX" id="'+groupName+'x"><i class="icon-remove"></i></span></a></div>');
+			$('.checkbox').show('slow');
 		}
 
 		$('.deleteX').on('click', function(){
