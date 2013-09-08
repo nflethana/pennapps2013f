@@ -59,6 +59,8 @@ document.addEventListener('DOMContentLoaded', function () {
             checkedCategory=page.categories[i];
           }
         }
+
+
         chrome.tabs.getSelected(null, function(tab) {
           page.addTab(tab, checkedCategory);
           console.log(page.currentTabs);
@@ -88,7 +90,7 @@ document.addEventListener('DOMContentLoaded', function () {
       var $tabsList = $("#addTabList");
       for (var i = 0; i < page.categories.length; i++) {
         if ($('#att'+page.categories[i]).length == 0)
-        $tabsList.append('<li class="checkbox"><label><input type="checkbox" id="att'+page.categories[i]+'" name="'+page.categories[i]+'" unchecked>'+page.categories[i]+'</label></li>');
+        $tabsList.append('<li><label><input type="radio" class="radiobutton" id="att'+page.categories[i]+'" name="tabOptions" value="'+page.categories[i]+'">'+page.categories[i]+'</label></li>');
       }
       
       $tabsBlock.css("display","block");
@@ -166,7 +168,7 @@ function displayGroups(page){
         }
       }
       $ung= $('#topUngrouped');
-      $ul = $('<ul></ul>');
+      $ul = $('<ul class="tab-list"></ul>');
       $ung.after($ul);
       for(var i=0;i<page.ungrouped.length;i++){
         var $li = liFromTab(page.ungrouped[i]);

@@ -24,16 +24,30 @@ body {
 }
 .groupLabel {
 	display: inline;
+	font-size: 150%;
+}
+
+.radiobutton {
+	display: inline;
+	float: left;
+	font-size: 110%;
 }
 
 #addTabBlock {
-	list-style:none;
 	display:none;
 }
 
 #submitAddTab, #cancelAddTab {
 	display: inline-block;
 	align: center;
+}
+
+.tab-list {
+	list-style-type: none;
+}
+
+ul {
+	list-style-type:none;
 }
 
 /*.plusButton {
@@ -50,6 +64,7 @@ body {
 }*/
 
 .deleteX {
+	top: 5px;
 	float: right;
 	position: relative;
 	line-height: 100%;
