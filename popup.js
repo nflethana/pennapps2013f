@@ -1,27 +1,22 @@
 document.addEventListener('DOMContentLoaded', function () {
   chrome.runtime.getBackgroundPage(function(page){
     console.log(page);
-
+    var left = true;
     console.log(page.categories);
 
 		displayGroups(page);
 		addUncheck(page);
 		
-    function bindLeft(x){
-    	$(x).on('click', function(){
-	    	$(this).addClass('down-caret');
-	    	$(this).removeClass('left-caret');
-	    	bindDown(this);
-    	});
-    }
-    function bindDown(x){
-    	$(x).on('click', function(){
-	    	$(this).addClass('left-caret');
-	    	$(this).removeClass('down-caret');
-	    	bindLeft(this);
-    	});
-    }
-   	bindLeft('.left-caret');
+  	$('.left-caret').on('click', function(e){
+      if(left){
+     	  $(this).addClass('left-caret');
+    	  $(this).removeClass('down-caret');
+      } else{
+        $(this).addClass('down-caret');
+        $(this).removeClass('left-caret');
+      }
+      left=!left;
+  	});
 
 		$('#showUngrouped').on('click', function(){
 			if ($(this).text() == "Show ungrouped tabs"){
@@ -181,4 +176,5 @@ function addUncheck(page) {
 }
 function liFromTab(tab){
   $li = $('<li><img src="'+tab.favIconUrl+'"/><span class="tab-url"'+tab.url+'</span></li>');
+  return $li;
 }
