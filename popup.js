@@ -150,7 +150,7 @@ function displayGroups(page){
         }
       }
       $ung= $('#topUngrouped');
-      $ul = $('<ul></ul>');
+      $ul = $('<ul class="tab-list"></ul>');
       $ung.after($ul);
       for(var i=0;i<page.ungrouped.length;i++){
         var $li = liFromTab(page.ungrouped[i]);
@@ -191,6 +191,6 @@ function addUncheck(page) {
     }
 }
 function liFromTab(tab){
-  $li = $('<li><img class="tab-icon" src="'+tab.favIconUrl+'"/>  '+tab.title+'</li>');
+  $li = $('<li class="tab-draggable ui-widget-content"><img class="tab-icon" src="'+tab.favIconUrl+'"/>  '+tab.title+'</li>');
   return $li;
 }
