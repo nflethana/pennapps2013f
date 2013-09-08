@@ -116,7 +116,7 @@ function addGroup(page){
       page.addCategory(groupName);
       $('#newGroupName').val('');
       groupName=groupName.replace(" ","_");
-      $('#group-block').append('<div id="wrapper'+groupName+'"><div class="checkbox" id="top'+groupName+'" style="display:none;"><label class="groupLabel"><input type="checkbox" id="'+groupName+'" name="'+groupName+'" checked>'+groupName+'   </label><a href="#"><span><b id="caret'+page.categories[i]+'"class="down-caret"></b></span></a><a href="#"><span class="deleteX" id="'+groupName+'x"><i class="icon-remove"></i></span></a></div></div>');
+      $('#group-block').append('<div id="wrapper'+groupName+'"><div class="checkbox" id="top'+groupName+'" style="display:none;"><label class="groupLabel"><input type="checkbox" id="'+groupName+'" name="'+groupName+'" checked>'+groupName+'   </label><a href="#"><span><b id="caret'+groupName+'"class="down-caret"></b></span></a><a href="#"><span class="deleteX" id="'+groupName+'x"><i class="icon-remove"></i></span></a></div></div>');
       var $div = $('#top'+groupName);
       $ul = $('<ul id="list'+groupName+'" class="tab-list"></ul>');
       $div.after($ul);
