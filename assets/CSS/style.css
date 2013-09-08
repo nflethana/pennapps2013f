@@ -27,6 +27,12 @@ body {
 	font-size: 150%;
 }
 
+.radiobutton {
+	display: inline;
+	float: left;
+	font-size: 110%;
+}
+
 #addTabBlock {
 	list-style:none;
 	display:none;
