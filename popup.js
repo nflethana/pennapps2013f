@@ -118,11 +118,24 @@ function addGroup(page){
       $('#newGroupName').val('');
       groupName=groupName.replace(" ","_");
       $('#group-block').append('<div class="checkbox" id="top'+groupName+'" style="display:none;"><label class="groupLabel"><input type="checkbox" id="'+groupName+'" name="'+groupName+'" checked>'+groupName+'</label><a href="#"><span class="deleteX" id="'+groupName+'x"><i class="icon-remove"></i></span></a></div>');
+      var $div = $('#top'+groupName);
+      $ul = $('<ul id="list'+groupName+'" class="tab-list"></ul>');
+      $div.after($ul);
       $('.checkbox').show('slow');
     }
 
     bindDeleteX(page);
     addUncheck(page);
+}
+function refreshGroup(page,groupName){
+  $('#list'+groupName.replace(' ','_')).remove();
+  var $div = $('#top'+x.replace(' ','_'));
+  $ul = $('<ul id="list'+x.replace(' ','_')+'" class="tab-list"></ul>');
+  $div.after($ul);
+  for(var i=0;i<page.currentTabs[x].length;i++){
+      var $li = liFromTab(page.currentTabs[x][i]);
+      $ul.append($li);
+  }
 }
 function displayGroups(page){
       console.log(page.categories);
@@ -142,7 +155,7 @@ function displayGroups(page){
       }
       for (var x in page.currentTabs){
         var $div = $('#top'+x.replace(' ','_'));
-        $ul = $('<ul></ul>');
+        $ul = $('<ul id="list'+x.replace(' ','_')+'" class="tab-list"></ul>');
         $div.after($ul);
         for(var i=0;i<page.currentTabs[x].length;i++){
           var $li = liFromTab(page.currentTabs[x][i]);
@@ -191,6 +204,19 @@ function addUncheck(page) {
     }
 }
 function liFromTab(tab){
-  $li = $('<li class="tab-draggable ui-widget-content"><img class="tab-icon" src="'+tab.favIconUrl+'"/>  '+tab.title+'</li>');
+  var title = tab.title;
+  if (title.length>50){
+    title=title.slice(0,51)+'...';
+  }
+  if(typeof tab.favIconUrl =='undefined' || tab.favIconUrl==null || tab.favIconUrl.length==0 || tab.favIconUrl.indexOf('chrome')==0){
+    favIconUrl='favicon.ico';
+  } else {
+    console.log(tab.favIconUrl);
+    favIconUrl = tab.favIconUrl;
+  }
+  $li = $('<li id="'+tab.id+'"" class="tab-draggable ui-widget-content"><img class="tab-icon" src="'+favIconUrl+'"/>  '+title+'</li>');
+  $li.click(function(){
+
+  });
   return $li;
 }
