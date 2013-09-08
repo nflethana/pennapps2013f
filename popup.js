@@ -16,29 +16,18 @@ document.addEventListener('DOMContentLoaded', function () {
 			dragging = $(this).parent('ul').prev().attr('id');
 		}
 
-  	$('.left-caret').on('click', function(e){
+  	$('.down-caret').on('click', function(e){
       if(left){
      	  $(this).addClass('left-caret');
     	  $(this).removeClass('down-caret');
+    	  $('#listUngrouped').hide("fast");
       } else{
         $(this).addClass('down-caret');
         $(this).removeClass('left-caret');
+        $('#listUngrouped').show("fast");
       }
       left=!left;
   	});
-
-		$('#showUngrouped').on('click', function(){
-			if ($(this).text() == "Show ungrouped tabs"){
-				$(this).text("Hide ungrouped tabs");
-			}
-			else {
-				$(this).text("Show ungrouped tabs");
-			}
-		});
-
-		$('.plusButton').click(function(){
-			addGroup(page);
-		});
 
 		$('#newGroupName').keypress(function(e){
 			if (e.which == 13){
@@ -168,7 +157,7 @@ function displayGroups(page){
         }
       }
       $ung= $('#topUngrouped');
-      $ul = $('<ul class="tab-list"></ul>');
+      $ul = $('<ul id="listUngrouped" class="tab-list"></ul>');
       $ung.after($ul);
       for(var i=0;i<page.ungrouped.length;i++){
         var $li = liFromTab(page.ungrouped[i]);
@@ -209,6 +198,6 @@ function addUncheck(page) {
     }
 }
 function liFromTab(tab){
-  $li = $('<li class="tab-draggable ui-widget-content ui-draggable"><img class="tab-icon" src="'+tab.favIconUrl+'"/>  '+tab.title+'</li>');
+  $li = $('<li class="tab-draggable"><img class="tab-icon" src="'+tab.favIconUrl+'"/>  '+tab.title+'</li>');
   return $li;
 }
