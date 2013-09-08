@@ -33,16 +33,16 @@ document.addEventListener('DOMContentLoaded', function () {
     $('#submitAddTab').click(function() {
 
       console.log(page.currentTabs);
-        var checkedCategories = [];
+        var checkedCategory;
         var $tabsBlock = $('#addTabBlock');
         for (var i = 0; i < page.categories.length; i++) {
           var $listItem = $('#att'+page.categories[i]);
           if ($listItem.is(':checked')) {
-            checkedCategories.push(page.categories[i]);
+            checkedCategory=page.categories[i];
           }
         }
         chrome.tabs.getSelected(null, function(tab) {
-          page.addTab(tab, checkedCategories);
+          page.addTab(tab, checkedCategory);
           console.log(page.currentTabs);
          });
 
