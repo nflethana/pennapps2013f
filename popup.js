@@ -90,6 +90,8 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 });
+
+
 function bindDeleteX(page){
   $('.deleteX').on('click', function(e){
     var xID = ($(this).attr('id'));
@@ -137,29 +139,28 @@ function addUncheck(page) {
         var category = page.categories[i];
 
           $('#'+category).change(function() {
-          var xcategory=$(this).attr('id');
-          if (!this.checked) {
-            console.log("in popup.js");
-            page.categoriesChecked[xcategory] = false;
-            var tabIds = [];
-            console.log(page.currentTabs);
-            var tabs = page.currentTabs[xcategory];
-            console.log(currentTabs);
-            console.log(tabs);
-            for(var i = 0; i < tabs.length; i++) {
-              console.log("In here");
-              tabIds.push(tabs[i].id);
-            }
-            if (tabIds.length > 0) {
-              chrome.tabs.remove(tabIds, function() {
+	          var xcategory=$(this).attr('id');
+	          if (!this.checked) {
 
-              });
-            }
-          } else {
-            page.categoriesChecked[xcategory] = true;
-            page.openTabs(this.id);
-           }
-        });
+	            page.categoriesChecked[xcategory] = false;
+
+	            var tabIds = [];
+	            var tabs = page.currentTabs[xcategory];
+	            for(var i = 0; i < tabs.length; i++) {
+	              tabIds.push(tabs[i].id);
+	            }
+
+	            if (tabIds.length > 0) {
+	              chrome.tabs.remove(tabIds, function() {
+	              	//  This should still have the old tabs
+	              	console.log(page.currentTabs);
+	              });
+	            }
+	          } else {
+	            page.categoriesChecked[xcategory] = true;
+	            page.openTabs(this.id);
+	          }
+	      });
 
     }
 }
