@@ -26,11 +26,13 @@ body {
 
 .tab-draggable {
 	width: 200px;
+	margin-top: 5px;
 }
 
 .groupLabel {
 	display: inline;
-	font-size: 120%;
+	font-size: 150%;
+	font-weight: bold;
 }
 
 #addTabBlock {
