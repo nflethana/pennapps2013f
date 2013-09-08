@@ -150,7 +150,7 @@ function displayGroups(page){
         }
       }
       $ung= $('#topUngrouped');
-      $ul = $('<ul></ul>');
+      $ul = $('<ul class="tab-list"></ul>');
       $ung.after($ul);
       for(var i=0;i<page.ungrouped.length;i++){
         var $li = liFromTab(page.ungrouped[i]);
