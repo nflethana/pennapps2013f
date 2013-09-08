@@ -3,6 +3,7 @@ var dragId;
 document.addEventListener('DOMContentLoaded', function () {
   chrome.runtime.getBackgroundPage(function(page){
     chrome.tabs.query({},function(tabArr){
+      console.log(tabArr);
       console.log(page.categoriesChecked['Ungrouped']);
       $('#UngroupedTabs').attr('checked',page.categoriesChecked['Ungrouped']);
       newCurrentTabs={};
@@ -33,9 +34,11 @@ document.addEventListener('DOMContentLoaded', function () {
       console.log(page);
       var left = true;
       console.log(page.categories);
+      setTimeout(function(){
+        displayGroups(page);
+        addUncheck(page);
 
-  		displayGroups(page);
-  		addUncheck(page);
+  		
   		
   		$('.tab-draggable').draggable({containment: 'body',
   																		revert: 'invalid',
@@ -90,7 +93,7 @@ document.addEventListener('DOMContentLoaded', function () {
           $tabsBlock.css("display", "none");
 
       });
-
+      },250);
       $('#cancelAddTab').click(function() {
         var $tabsBlock = $('#addTabBlock');
         $tabsBlock.css("display", "none");
