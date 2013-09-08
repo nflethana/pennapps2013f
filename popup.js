@@ -125,6 +125,7 @@ function addGroup(page){
       $div.after($ul);
       $('.checkbox').show('slow');
       $('#wrapper' + groupName).droppable({accept: '.tab-draggable',
+      	hoverClass: "ui-state-active",
         drop: function(event, ui){
           var first = dragging.slice(3);
           var second = $(this).attr("id").slice(7).replace('_',' ');
@@ -183,6 +184,7 @@ function displayGroups(page){
         var name = page.categories[i].replace(' ','_');
         $list.append('<div id="wrapper'+name+'"><div class="checkbox" id="top'+name+'"><label class="groupLabel"><input type="checkbox" id="'+name+'" name="'+name+'" '+checked+'>'+page.categories[i]+'   </label><a href="#"><span><b id="caret'+page.categories[i]+'"class="down-caret"></b></span></a><a href="#"><span class="deleteX" id="'+name+'x"><i class="icon-remove"></i></span></a></div></div>');
         $('#wrapper' + name).droppable({accept: '.tab-draggable',
+        																	hoverClass: "ui-state-active",
       																		drop: function(event, ui){
                                             var first = dragging.slice(3);
                                             var second = $(this).attr("id").slice(7).replace('_',' ');
@@ -211,6 +213,7 @@ function displayGroups(page){
         $ul.append($li);
       }
       $('#wrapperUngrouped').droppable({accept: '.tab-draggable',
+      																		hoverClass: "ui-state-active",
                                           drop: function(event, ui){
                                             var first = dragging.slice(3);
                                             var second = $(this).attr("id").slice(7);

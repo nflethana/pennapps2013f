@@ -29,7 +29,6 @@ body {
 }
 
 .tab-draggable {
-	width: 200px;
 	margin-top: 5px;
 }
 
@@ -77,7 +76,7 @@ ul {
 }
 
 .deleteX:active {
-	top: 2px;
+	top: 5px;
 	transition: 0.2s;
 }
 
@@ -92,6 +91,14 @@ ul {
 	height: 1px;
 	overflow: hidden;
 	background-color: #e5e5e5;
+}
+
+.ui-state-active {
+	border-radius: 3px;
+	background-color: #EEEEEE;
+	color: black;
+	border: none;
+	font-weight: normal;
 }
 
 .left-caret {
