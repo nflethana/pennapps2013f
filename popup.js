@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', function () {
      
       for(var i=0;i<tabArr.length;i++){
         var group = page.findInObj(tabArr[i].id,page.currentTabs);
-        if(group!="Ungrouped"){
+        if(group!="Ungrouped" && page.groupExits.indexOf(group)==-1){
           newCurrentTabs[group].push(tabArr[i]);
         }else{
           newUngrouped.push(tabArr[i]);
@@ -143,13 +143,22 @@ function addGroup(page){
           console.log($(this).attr("id"));
           var first = dragging.slice(3);
           var second = $(this).attr("id").slice(7).replace('_',' ');
-          chrome.tabs.get(dragId,function(tab){
-            console.log(page.categories);
-            console.log(second);
-            page.addTab(tab,second);
+          var tab = page.findTabById(dragId);
+          if(first!=second){
+            page.addTab(tab,second,page.categoriesChecked[first]);
+            if(!page.categoriesChecked[first]){
+              setTimeout(function(){
+                refreshGroup(page,first);
+                refreshGroup(page,second);
+              },1000);
+            }
+            else{
+              refreshGroup(page,first);
+              refreshGroup(page,second);
+            }  
+          } else {
             refreshGroup(page,first);
-            refreshGroup(page,second);
-          });
+          }
         }
         });
     }
@@ -201,11 +210,22 @@ function displayGroups(page){
       																		drop: function(event, ui){
                                             var first = dragging.slice(3);
                                             var second = $(this).attr("id").slice(7).replace('_',' ');
-      																			chrome.tabs.get(dragId,function(tab){
-                                              page.addTab(tab,second);
+      																			var tab = page.findTabById(dragId);
+                                            if(first!=second){
+                                              page.addTab(tab,second,page.categoriesChecked[first]);
+                                              if(!page.categoriesChecked[first]){
+                                                setTimeout(function(){
+                                                  refreshGroup(page,first);
+                                                  refreshGroup(page,second);
+                                                },1000);
+                                              }else{
+                                                refreshGroup(page,first);
+                                                refreshGroup(page,second);
+                                              }
+                                            } else {
                                               refreshGroup(page,first);
-                                              refreshGroup(page,second);
-                                            })
+                                            }
+                                            
       																		}
       																		});
       }
@@ -230,11 +250,21 @@ function displayGroups(page){
                                           drop: function(event, ui){
                                             var first = dragging.slice(3);
                                             var second = $(this).attr("id").slice(7);
-                                            chrome.tabs.get(dragId,function(tab){
-                                              page.addTab(tab,second);
+                                           var tab = page.findTabById(dragId);
+                                            if(first!=second){
+                                              page.addTab(tab,second,page.categoriesChecked[first]);
+                                              if(!page.categoriesChecked[first]){
+                                                setTimeout(function(){
+                                                  refreshGroup(page,first);
+                                                  refreshGroup(page,second);
+                                                },1000);
+                                              }else{
+                                                refreshGroup(page,first);
+                                                refreshGroup(page,second);
+                                              }
+                                            } else {
                                               refreshGroup(page,first);
-                                              refreshGroup(page,second);
-                                            })
+                                            }
                                           }
                                           });
       bindDeleteX(page);

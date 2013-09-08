@@ -107,6 +107,15 @@ findInObj = function(tabId,obj){
 	}
 	return 'Ungrouped';
 }
+findTabById = function(tabId){
+	for(x in currentTabs){
+		var num = findinArray(tabId,currentTabs[x]);
+		if(num>-1) return currentTabs[x][num];
+	}
+	num = findinArray(tabId,ungrouped);
+	if (num>-1) return ungrouped[num];
+	else return null;
+}
 addDomain = function(url,addCategories){
 	var hostname = getHostname(url);
 	for (var i = 0; i < categories.length; i++) {
@@ -116,15 +125,18 @@ addDomain = function(url,addCategories){
 	}
 }
 
-addTab = function(tab, addCategory){
-	console.log(window.currentTabs);
-	console.log(window.ungrouped);
-	//console.log(getAllTabs());
-	var ung = findinArray(tab.id,window.ungrouped);
-	if(ung>-1){
-		window.ungrouped.splice(ung,1);
+addTab = function(tab, addCategory,fromChecked){
+	console.log(addCategory);
+	if(fromChecked){
+		console.log(window.currentTabs);
+		console.log(window.ungrouped);
+		//console.log(getAllTabs());
+		var ung = findinArray(tab.id,window.ungrouped);
+		if(ung>-1){
+			window.ungrouped.splice(ung,1);
+		}
 	}
-	// clear other categories
+		// clear other categories
 	for(x in window.currentTabs){
 		for(var j=0;j<window.currentTabs[x].length;j++){
 			if(window.currentTabs[x][j].id==tab.id){
@@ -132,6 +144,15 @@ addTab = function(tab, addCategory){
 			}
 		}
 	}
+	if(!fromChecked){
+		chrome.tabs.create({url:tab.url,active:false}, function(newTab){
+			if(addCategory=='Ungrouped'){
+				window.ungrouped.push(newTab);
+			} else {
+				window.currentTabs[addCategory].push(newTab);
+			}
+		});
+	} else{
 	if (addCategory=='Ungrouped'){
 		window.ungrouped.push(tab);
 	} else {
@@ -143,6 +164,7 @@ addTab = function(tab, addCategory){
 	}
 	console.log(currentTabs);
 	saveTabs();
+	}
 }
 
 findCategories = function(tabID){
@@ -155,13 +177,17 @@ findCategories = function(tabID){
 	return found;
 }
 
-openTabs = function(category){
+openTabs = function(category,tab){
 	var arr;
-	if(category=='Ungrouped'){
+	console.log(tab);
+	if(typeof tab!='undefined'){
+		arr=[tab];
+	}else if(category=='Ungrouped'){
 		arr = window.ungrouped;
 	} else {
 		arr = window.currentTabs[category];
 	}
+	console.log(arr);
 	for(var i=0; i<arr.length;i++){
 		chrome.tabs.create({url:arr[i].url,active:false}, function(newTab){
 			saveNewTab(newTab);
@@ -170,8 +196,9 @@ openTabs = function(category){
 		});
 	}
 	window.setTimeout(function() {
-		replaceOldTabs(category);
+		replaceOldTabs(category,typeof tab!='undefined');
 	}, 1000);
+
 
 	// replaceOldTabs(category);
 }
@@ -182,13 +209,19 @@ saveNewTab = function(tab) {
 	window.tabsBeingAdded.push(tab);
 }
 
-replaceOldTabs = function(category) {
-	if(category=="Ungrouped"){
+replaceOldTabs = function(category,issingle) {
+	if(issingle){
+		if(category=="Ungrouped"){
+			window.ungrouped.push(window.tabsBeingAdded[0]);
+		} else {
+			window.currentTabs[category].push(window.tabsBeingAdded[0]);
+		}
+	} else if(category=="Ungrouped"){
 		window.ungrouped=[];
-	} else{
+	} else {
 		window.currentTabs[category] = [];
 	}
-	
+	if(!issingle){
 	for (var i = 0; i < window.tabsBeingAdded.length; i++) {
 		if(category=="Ungrouped"){
 			window.ungrouped.push(tabsBeingAdded[i]);
@@ -196,6 +229,7 @@ replaceOldTabs = function(category) {
 			window.currentTabs[category].push(tabsBeingAdded[i]);
 		}
 		
+		}
 	}
 	window.tabsBeingAdded = [];
 }
