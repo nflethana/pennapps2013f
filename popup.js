@@ -81,7 +81,7 @@ document.addEventListener('DOMContentLoaded', function () {
       var $tabsList = $("#addTabList");
       for (var i = 0; i < page.categories.length; i++) {
         if ($('#att'+page.categories[i]).length == 0)
-        $tabsList.append('<li><label><input type="radio" class="radiobutton" id="att'+page.categories[i]+'" name="tabOptions" value="'+page.categories[i]+'">'+page.categories[i]+'</label></li>');
+        $tabsList.append('<li><label class="radio"><input type="radio" id="att'+page.categories[i]+'" name="tabOptions" value="'+page.categories[i]+'">'+page.categories[i]+'</label></li>');
       }
       
       $tabsBlock.css("display","block");
