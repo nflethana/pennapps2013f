@@ -215,8 +215,5 @@ function liFromTab(tab){
     favIconUrl = tab.favIconUrl;
   }
   $li = $('<li id="'+tab.id+'"" class="tab-draggable ui-widget-content"><img class="tab-icon" src="'+favIconUrl+'"/>  '+title+'</li>');
-  $li.click(function(){
-
-  });
   return $li;
 }
