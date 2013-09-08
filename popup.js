@@ -27,6 +27,7 @@ document.addEventListener('DOMContentLoaded', function () {
           newUngrouped.push(tabArr[i]);
         }
       }
+      page.groupExits=[];
       page.currentTabs=newCurrentTabs;
       page.ungrouped=newUngrouped;
       console.log(page);
@@ -300,7 +301,7 @@ function liFromTab(tab){
     title=title.slice(0,51)+'...';
   }
   if(typeof tab.favIconUrl =='undefined' || tab.favIconUrl==null || tab.favIconUrl.length==0 || tab.favIconUrl.indexOf('chrome')==0){
-    favIconUrl='favicon.ico';
+    favIconUrl='folders.png';
   } else {
     console.log(tab.favIconUrl);
     favIconUrl = tab.favIconUrl;
