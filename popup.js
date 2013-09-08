@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     console.log(page.categories);
 
-    displayGroups = function(page){
+    function displayGroups(page){
 			console.log(page.categories);
 			var $list = $('#group-block');
 			$list.html('');
@@ -56,7 +56,7 @@ document.addEventListener('DOMContentLoaded', function () {
 	    }
 	  }
 
-	$('.plusButton').click(function(){
+	function addGroup(){
 		var groupName = $('#newGroupName').val();
 		if (groupName.length > 0){
 			page.addCategory(groupName);
@@ -67,7 +67,18 @@ document.addEventListener('DOMContentLoaded', function () {
 
 		bindDeleteX();
 		addUncheck();
-	});
+	}
+
+		$('.plusButton').click(function(){
+			addGroup();
+		});
+
+		$('#newGroupName').keypress(function(e){
+			if (e.which == 13){
+				addGroup();
+			}
+		});
+
 
 
     // Add functionality for Add current tab to...
