@@ -6,16 +6,22 @@ document.addEventListener('DOMContentLoaded', function () {
 
 		displayGroups(page);
 		addUncheck(page);
-      
-    $('.left-caret').live('click', function(){
-    	$(this).addClass('down-caret');
-    	$(this).removeClass('left-caret');
-    });
-
-    $('.down-caret').live('click', function(){
-    	$(this).addClass('left-caret');
-    	$(this).removeClass('down-caret');
-    });
+		
+    function bindLeft(x){
+    	$(x).on('click', function(){
+	    	$(this).addClass('down-caret');
+	    	$(this).removeClass('left-caret');
+	    	bindDown(this);
+    	});
+    }
+    function bindDown(x){
+    	$(x).on('click', function(){
+	    	$(this).addClass('left-caret');
+	    	$(this).removeClass('down-caret');
+	    	bindLeft(this);
+    	});
+    }
+   	bindLeft('.left-caret');
 
 		$('#showUngrouped').on('click', function(){
 			if ($(this).text() == "Show ungrouped tabs"){
@@ -98,8 +104,6 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 });
-
-
 function bindDeleteX(page){
   $('.deleteX').on('click', function(e){
     var xID = ($(this).attr('id'));
@@ -149,28 +153,29 @@ function addUncheck(page) {
         var category = page.categories[i];
 
           $('#'+category).change(function() {
-	          var xcategory=$(this).attr('id');
-	          if (!this.checked) {
+          var xcategory=$(this).attr('id');
+          if (!this.checked) {
+            console.log("in popup.js");
+            page.categoriesChecked[xcategory] = false;
+            var tabIds = [];
+            console.log(page.currentTabs);
+            var tabs = page.currentTabs[xcategory];
+            console.log(currentTabs);
+            console.log(tabs);
+            for(var i = 0; i < tabs.length; i++) {
+              console.log("In here");
+              tabIds.push(tabs[i].id);
+            }
+            if (tabIds.length > 0) {
+              chrome.tabs.remove(tabIds, function() {
 
-	            page.categoriesChecked[xcategory] = false;
-
-	            var tabIds = [];
-	            var tabs = page.currentTabs[xcategory];
-	            for(var i = 0; i < tabs.length; i++) {
-	              tabIds.push(tabs[i].id);
-	            }
-
-	            if (tabIds.length > 0) {
-	              chrome.tabs.remove(tabIds, function() {
-	              	//  This should still have the old tabs
-	              	console.log(page.currentTabs);
-	              });
-	            }
-	          } else {
-	            page.categoriesChecked[xcategory] = true;
-	            page.openTabs(this.id);
-	          }
-	      });
+              });
+            }
+          } else {
+            page.categoriesChecked[xcategory] = true;
+            page.openTabs(this.id);
+           }
+        });
 
     }
 }
