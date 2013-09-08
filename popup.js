@@ -4,13 +4,19 @@ document.addEventListener('DOMContentLoaded', function () {
 
     console.log(page.categories);
 
-    
 		displayGroups(page);
 		addUncheck(page);
       
       
 
-	
+		$('#showUngrouped').on('click', function(){
+			if ($(this).text() == "Show ungrouped tabs"){
+				$(this).text("Hide ungrouped tabs");
+			}
+			else {
+				$(this).text("Show ungrouped tabs");
+			}
+		});
 
 		$('.plusButton').click(function(){
 			addGroup(page);
@@ -21,8 +27,6 @@ document.addEventListener('DOMContentLoaded', function () {
 				addGroup(page);
 			}
 		});
-
-
 
     // Add functionality for Add current tab to...
     
