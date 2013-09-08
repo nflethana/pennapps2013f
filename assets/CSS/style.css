@@ -13,10 +13,6 @@ body {
 	float: left;
 }
 
-#groupName {
-	display:none;
-}
-
 #newGroupName {
 	float:left;
 	width: 265px;
@@ -26,10 +22,6 @@ body {
 
 .groupLabel {
 	display: inline;
-}
-
-.glyphDropLeft {
-	display: inline-block;
 }
 
 #addTabBlock {
@@ -77,4 +69,26 @@ body {
 	height: 1px;
 	overflow: hidden;
 	background-color: #e5e5e5;
+}
+
+.left-caret {
+  border-bottom: 5px solid transparent;
+  border-top: 5px solid transparent;
+  border-right: 5px solid #000000;
+  display: inline-block;
+  height: 0;
+  opacity: 0.5;
+  vertical-align: middle;
+  width: 0;
+}
+
+.down-caret {
+	border-right: 5px solid transparent;
+	border-left: 5px solid transparent;
+	border-top: 5px solid #000000;
+	display: inline-block;
+	height: 0;
+	opacity: 0.5;
+	vertical-align: middle;
+	width: 0;		
 }
