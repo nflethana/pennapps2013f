@@ -15,15 +15,23 @@ chrome.tabs.query({},function(arr){
 		console.log(window.ungrouped[i]);
 	}
 	console.log(window.ungrouped);
-	for(var i=0;i<window.ungrouped.length;i++){
-		var hostname = getHostname(window.ungrouped[i].url);
-		var a = findDomainCategory(hostname)
-		if(a){
-			var tab = window.ungrouped.splice(i,1);
-			addTab(tab,a);
-
+	chrome.storage.local.get('domainList',function(result){
+		if(result.domainList){
+			window.domainList = result.domainList;
+		} else {
+			window.domainList = {};
 		}
-	}
+		for(var i=0;i<window.ungrouped.length;i++){
+			var hostname = getHostname(window.ungrouped[i].url);
+		
+			
+			var a = findDomainCategory(hostname);
+			if(a){
+				var tab = window.ungrouped.splice(i,1);
+				addTab(tab,a);
+			}
+		}
+	});
 });
 // setTimeout(function(){
 // 	console.log(window.ungrouped);
