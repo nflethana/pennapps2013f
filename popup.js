@@ -7,7 +7,15 @@ document.addEventListener('DOMContentLoaded', function () {
 		displayGroups(page);
 		addUncheck(page);
       
-      
+    $('.left-caret').on('click', function(){
+    	$(this).addClass('down-caret');
+    	$(this).removeClass('left-caret');
+    });
+
+    $('.down-caret').on('click', function(){
+    	$(this).addClass('left-caret');
+    	$(this).removeClass('down-caret');
+    });
 
 		$('#showUngrouped').on('click', function(){
 			if ($(this).text() == "Show ungrouped tabs"){
