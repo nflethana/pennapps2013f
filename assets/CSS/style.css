@@ -76,6 +76,7 @@ body {
   border-top: 5px solid transparent;
   border-right: 5px solid #000000;
   display: inline-block;
+  text-align: right;
   height: 0;
   opacity: 0.5;
   vertical-align: middle;
@@ -88,6 +89,7 @@ body {
 	border-left: 5px solid transparent;
 	border-top: 5px solid #000000;
 	display: inline-block;
+	text-align: right;
 	height: 0;
 	opacity: 0.5;
 	vertical-align: middle;
