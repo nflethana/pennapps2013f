@@ -161,7 +161,7 @@ openTabs = function(category){
 		arr = window.currentTabs[category];
 	}
 	for(var i=0; i<arr.length;i++){
-		chrome.tabs.create({url:arr[i].url}, function(newTab){
+		chrome.tabs.create({url:arr[i].url,active:false}, function(newTab){
 			saveNewTab(newTab);
 
 			// window.currentTabs[category][i]=newTab;
