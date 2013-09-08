@@ -7,6 +7,8 @@ document.addEventListener('DOMContentLoaded', function () {
 		displayGroups(page);
 		addUncheck(page);
 		
+		$('.tab-draggable').draggable();
+
   	$('.left-caret').on('click', function(e){
       if(left){
      	  $(this).addClass('left-caret');
