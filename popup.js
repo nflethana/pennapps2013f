@@ -140,6 +140,7 @@ function addUncheck(page) {
             var tabIds = [];
             console.log(page.currentTabs);
             var tabs = page.currentTabs[xcategory];
+            console.log(currentTabs);
             console.log(tabs);
             for(var i = 0; i < tabs.length; i++) {
               console.log("In here");
