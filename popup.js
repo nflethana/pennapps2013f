@@ -18,15 +18,17 @@ document.addEventListener('DOMContentLoaded', function () {
       dragId = parseInt($(this).attr('id'));
 		}
 
-  	$('.down-caret').on('click', function(e){
+  	$('.down-caret').on('click', function(){
+  		var $thisId = $(this).attr('id').slice(5);
+  		console.log($thisId);
       if(left){
      	  $(this).addClass('left-caret');
     	  $(this).removeClass('down-caret');
-    	  $('#listUngrouped').hide("fast");
+    	  $('#list' + $thisId).hide("fast");
       } else{
         $(this).addClass('down-caret');
         $(this).removeClass('left-caret');
-        $('#listUngrouped').show("fast");
+        $('#list' + $thisId).show("fast");
       }
       left=!left;
   	});
@@ -119,7 +121,7 @@ function addGroup(page){
       page.addCategory(groupName);
       $('#newGroupName').val('');
       groupName=groupName.replace(" ","_");
-      $('#group-block').append('<div class="checkbox" id="top'+groupName+'" style="display:none;"><label class="groupLabel"><input type="checkbox" id="'+groupName+'" name="'+groupName+'" checked>'+groupName+'</label><a href="#"><span class="deleteX" id="'+groupName+'x"><i class="icon-remove"></i></span></a></div>');
+      $('#group-block').append('<div class="checkbox" id="top'+groupName+'" style="display:none;"><label class="groupLabel"><input type="checkbox" id="'+groupName+'" name="'+groupName+'" checked>'+groupName+'</label><a href="#"><span><b id="caret'+page.categories[i]+'"class="down-caret"></b></span></a><a href="#"><span class="deleteX" id="'+groupName+'x"><i class="icon-remove"></i></span></a></div>');
       var $div = $('#top'+groupName);
       $ul = $('<ul id="list'+groupName+'" class="tab-list"></ul>');
       $div.after($ul);
@@ -169,7 +171,7 @@ function displayGroups(page){
         }
         console.log('appending' + i);
         var name = page.categories[i].replace(' ','_');
-        $list.append('<div class="checkbox" id="top'+name+'"><label class="groupLabel"><input type="checkbox" id="'+name+'" name="'+name+'" '+checked+'>'+page.categories[i]+'</label><a href="#"><span class="deleteX" id="'+name+'x"><i class="icon-remove"></i></span></a></div>');
+        $list.append('<div class="checkbox" id="top'+name+'"><label class="groupLabel"><input type="checkbox" id="'+name+'" name="'+name+'" '+checked+'>'+page.categories[i]+'</label><a href="#"><span><b id="caret'+page.categories[i]+'"class="down-caret"></b></span></a><a href="#"><span class="deleteX" id="'+name+'x"><i class="icon-remove"></i></span></a></div>');
         $('#top' + name).droppable({accept: '.tab-draggable',
       																		drop: function(event, ui){
                                             var first = dragging.slice(3);
