@@ -8,6 +8,11 @@ body {
 	margin: 5px;
 }
 
+.staticGroups {
+	margin: 5px;
+	float: left;
+}
+
 #groupName {
 	display:none;
 }
@@ -16,9 +21,14 @@ body {
 	float:left;
 	width: 265px;
 	margin: 5px;
+	margin-bottom: 10px;
 }
 
 .groupLabel {
+	display: inline;
+}
+
+.glyphDropLeft {
 	display: inline-block;
 }
 
@@ -54,4 +64,17 @@ body {
 .deleteX:active {
 	top: 2px;
 	transition: 0.2s;
+}
+
+.dividerList {
+	list-style-type: none;
+	margin: 0px;
+	padding: 0px;
+}
+
+.divider {
+	width: 100%;
+	height: 1px;
+	overflow: hidden;
+	background-color: #e5e5e5;
 }

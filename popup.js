@@ -4,13 +4,19 @@ document.addEventListener('DOMContentLoaded', function () {
 
     console.log(page.categories);
 
-    
 		displayGroups(page);
 		addUncheck(page);
       
       
 
-	
+		$('#showUngrouped').on('click', function(){
+			if ($(this).text() == "Show ungrouped tabs"){
+				$(this).text("Hide ungrouped tabs");
+			}
+			else {
+				$(this).text("Show ungrouped tabs");
+			}
+		});
 
 		$('.plusButton').click(function(){
 			addGroup(page);
@@ -22,23 +28,21 @@ document.addEventListener('DOMContentLoaded', function () {
 			}
 		});
 
-
-
     // Add functionality for Add current tab to...
     
     $('#submitAddTab').click(function() {
 
       console.log(page.currentTabs);
-        var checkedCategories = [];
+        var checkedCategory;
         var $tabsBlock = $('#addTabBlock');
         for (var i = 0; i < page.categories.length; i++) {
           var $listItem = $('#att'+page.categories[i]);
           if ($listItem.is(':checked')) {
-            checkedCategories.push(page.categories[i]);
+            checkedCategory=page.categories[i];
           }
         }
         chrome.tabs.getSelected(null, function(tab) {
-          page.addTab(tab, checkedCategories);
+          page.addTab(tab, checkedCategory);
           console.log(page.currentTabs);
          });
 
