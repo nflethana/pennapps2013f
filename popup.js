@@ -1,3 +1,4 @@
+var dragging = '';
 document.addEventListener('DOMContentLoaded', function () {
   chrome.runtime.getBackgroundPage(function(page){
     console.log(page);
@@ -7,6 +8,14 @@ document.addEventListener('DOMContentLoaded', function () {
 		displayGroups(page);
 		addUncheck(page);
 		
+		$('.tab-draggable').draggable({containment: 'body',
+																		revert: 'invalid',
+																		start: startDrag});
+
+		function startDrag(event, ui){
+			dragging = $(this).parent('ul').prev().attr('id');
+		}
+
   	$('.left-caret').on('click', function(e){
       if(left){
      	  $(this).addClass('left-caret');
@@ -121,6 +130,7 @@ function addGroup(page){
       groupName=groupName.replace(" ","_");
       $('#group-block').append('<div class="checkbox" id="top'+groupName+'" style="display:none;"><label class="groupLabel"><input type="checkbox" id="'+groupName+'" name="'+groupName+'" checked>'+groupName+'</label><a href="#"><span class="deleteX" id="'+groupName+'x"><i class="icon-remove"></i></span></a></div>');
       $('.checkbox').show('slow');
+      $('#top' + groupName).droppable({accept: '.tab-draggable'});
     }
 
     bindDeleteX(page);
@@ -141,6 +151,12 @@ function displayGroups(page){
         console.log('appending' + i);
         var name = page.categories[i].replace(' ','_');
         $list.append('<div class="checkbox" id="top'+name+'"><label class="groupLabel"><input type="checkbox" id="'+name+'" name="'+name+'" '+checked+'>'+page.categories[i]+'</label><a href="#"><span class="deleteX" id="'+name+'x"><i class="icon-remove"></i></span></a></div>');
+        $('#top' + name).droppable({accept: '.tab-draggable',
+      																		drop: function(event, ui){
+      																			console.log(ui.draggable);
+      																			console.log("dropped " + dragging + " in " + $(this).attr("id"));
+      																		}
+      																		});
       }
       for (var x in page.currentTabs){
         var $div = $('#top'+x.replace(' ','_'));
@@ -193,6 +209,6 @@ function addUncheck(page) {
     }
 }
 function liFromTab(tab){
-  $li = $('<li class="tab-draggable ui-widget-content"><img class="tab-icon" src="'+tab.favIconUrl+'"/>  '+tab.title+'</li>');
+  $li = $('<li class="tab-draggable ui-widget-content ui-draggable"><img class="tab-icon" src="'+tab.favIconUrl+'"/>  '+tab.title+'</li>');
   return $li;
 }
