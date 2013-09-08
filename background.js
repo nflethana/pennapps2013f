@@ -1,5 +1,3 @@
-chrome.storage.local.clear();
-
 /*
 window.currenttabs is an object whose keys are the different tab
 categories and whose values are the current tabs open under that category
