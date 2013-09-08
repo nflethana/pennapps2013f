@@ -137,30 +137,7 @@ function addGroup(page){
       $('.checkbox').show('slow');
       $('#wrapper' + groupName).droppable({accept: '.tab-draggable',
       	hoverClass: "ui-state-active",
-        drop: function(event, ui){
-          console.log(dragging);
-          console.log($(this));
-          console.log($(this).attr("id"));
-          var first = dragging.slice(3);
-          var second = $(this).attr("id").slice(7).replace('_',' ');
-          var tab = page.findTabById(dragId);
-          if(first!=second){
-            page.addTab(tab,second,page.categoriesChecked[first]);
-            if(!page.categoriesChecked[first]){
-              setTimeout(function(){
-                refreshGroup(page,first);
-                refreshGroup(page,second);
-              },1000);
-            }
-            else{
-              refreshGroup(page,first);
-              refreshGroup(page,second);
-            }  
-          } else {
-            refreshGroup(page,first);
-          }
-        }
-        });
+        drop: Drop});
     }
     bindDeleteX(page);
     addUncheck(page);
@@ -207,28 +184,28 @@ function displayGroups(page){
         $list.append('<div id="wrapper'+name+'"><div class="checkbox" id="top'+name+'"><label class="groupLabel"><input type="checkbox" id="'+name+'" name="'+name+'" '+checked+'>'+page.categories[i]+'   </label><a href="#"><span><b id="caret'+page.categories[i]+'"class="down-caret"></b></span></a><a href="#"><span class="deleteX" id="'+name+'x"><i class="icon-remove"></i></span></a></div></div>');
         $('#wrapper' + name).droppable({accept: '.tab-draggable',
         																	hoverClass: "ui-state-active",
-      																		drop: function(event, ui){
-                                            var first = dragging.slice(3);
-                                            var second = $(this).attr("id").slice(7).replace('_',' ');
-      																			var tab = page.findTabById(dragId);
-                                            if(first!=second){
-                                              page.addTab(tab,second,page.categoriesChecked[first]);
-                                              if(!page.categoriesChecked[first]){
-                                                setTimeout(function(){
-                                                  refreshGroup(page,first);
-                                                  refreshGroup(page,second);
-                                                },1000);
-                                              }else{
-                                                refreshGroup(page,first);
-                                                refreshGroup(page,second);
-                                              }
-                                            } else {
-                                              refreshGroup(page,first);
-                                            }
-                                            
-      																		}
-      																		});
+      																		drop: Drop});
       }
+      function Drop(event, ui){
+        var first = dragging.slice(3);
+        var second = $(this).attr("id").slice(7).replace('_',' ');
+				var tab = page.findTabById(dragId);
+        if(first!=second){
+          page.addTab(tab,second,page.categoriesChecked[first]);
+          if(!page.categoriesChecked[first]){
+            setTimeout(function(){
+              refreshGroup(page,first);
+              refreshGroup(page,second);
+            },1000);
+          }else{
+            refreshGroup(page,first);
+            refreshGroup(page,second);
+          }
+        } else {
+          refreshGroup(page,first);
+        }
+        
+			}
       for (var x in page.currentTabs){
         var $div = $('#top'+x.replace(' ','_'));
         $ul = $('<ul id="list'+x.replace(' ','_')+'" class="tab-list"></ul>');
@@ -247,26 +224,7 @@ function displayGroups(page){
       }
       $('#wrapperUngrouped').droppable({accept: '.tab-draggable',
       																		hoverClass: "ui-state-active",
-                                          drop: function(event, ui){
-                                            var first = dragging.slice(3);
-                                            var second = $(this).attr("id").slice(7);
-                                           var tab = page.findTabById(dragId);
-                                            if(first!=second){
-                                              page.addTab(tab,second,page.categoriesChecked[first]);
-                                              if(!page.categoriesChecked[first]){
-                                                setTimeout(function(){
-                                                  refreshGroup(page,first);
-                                                  refreshGroup(page,second);
-                                                },1000);
-                                              }else{
-                                                refreshGroup(page,first);
-                                                refreshGroup(page,second);
-                                              }
-                                            } else {
-                                              refreshGroup(page,first);
-                                            }
-                                          }
-                                          });
+                                          drop: Drop});
       bindDeleteX(page);
     }
 function addUncheck(page) {
