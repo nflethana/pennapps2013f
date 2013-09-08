@@ -60,7 +60,6 @@ addDomain = function(url,addCategories){
 	}
 }
 addTab = function(tab, addCategories){
-	console.log(addCategories);
 	var currentCats = findCategories(tab.id);
 	var notCategories = window.categories.slice(0);
 	// clear other categories
@@ -73,11 +72,8 @@ addTab = function(tab, addCategories){
 	}
 	// select the new one
 	for (var i = 0; i < addCategories.length; i++) {
-		if(currentCats.indexOf(cateogry)==-1){
-			window.currentTabs[addCategories[i]].push(tab);
-		}
+		window.currentTabs[addCategories[i]].push(tab);
 	}
-	console.log(window.currentTabs[addCategories[0]]);
 	saveTabs();
 }
 findCategories = function(tabID){
