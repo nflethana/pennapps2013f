@@ -1,4 +1,4 @@
-chrome.storage.local.clear();
+
 
 /*
 window.currenttabs is an object whose keys are the different tab
@@ -24,6 +24,7 @@ function checkCategory(category) {
 categories is just an array with all the category names in it
 */
 chrome.storage.local.get('categories',function(result){
+	console.log(result);
 	if(result.categories){
 		window.categories = result.categories;
 	} else {
@@ -33,6 +34,7 @@ chrome.storage.local.get('categories',function(result){
 		if(typeof window.currentTabs[window.categories[i]]== "undefined"){
 			window.currentTabs[window.categories[i]]=[];
 		}
+		window.categoriesChecked[window.categories[i]]=true;
 	}
 });
 
@@ -56,14 +58,12 @@ addDomain = function(url,addCategories){
 	}
 }
 addTab = function(tab, addCategories){
-	console.log(currentTabs.blah2);
 	var currentCats = findCategories(tab.id);
 	for (var i = 0; i < addCategories.length; i++) {
 		if(currentCats.indexOf(addCategories[i])==-1){
 			window.currentTabs[addCategories[i]].push(tab);
 		}
 	}
-	console.log(currentTabs.blah2);
 	saveTabs();
 }
 findCategories = function(tabID){
@@ -88,6 +88,7 @@ removeCategory = function(categoryName){
 	delete window.currentTabs[categoryName];
 	delete window.domainList[categoryName];
 	delete window.categoriesChecked[categoryName];
+	saveAll();
 }
 addCategory = function(categoryName) {
 	if (window.categories.indexOf(categoryName)==-1){

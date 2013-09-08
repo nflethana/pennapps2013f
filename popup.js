@@ -33,13 +33,15 @@ document.addEventListener('DOMContentLoaded', function () {
 	    //  Check to see if the user un-checks the group
 	    for (var i=0; i < page.categories.length; i++) {
 	    	var category = page.categories[i];
-	    	$('#'+category).change(function() {
-	    		if (!this.checked) {
+
+          $('#'+category).change(function() {
+	    		var xcategory=$(this).attr('id');
+          if (!this.checked) {
 	    			console.log("in popup.js");
-	    			page.categoriesChecked[category] = false;
+	    			page.categoriesChecked[xcategory] = false;
 	    			var tabIds = [];
 	    			console.log(page.currentTabs);
-	    			var tabs = page.currentTabs[category];
+	    			var tabs = page.currentTabs[xcategory];
 	    			console.log(tabs);
     				for(var i = 0; i < tabs.length; i++) {
     					console.log("In here");
@@ -51,10 +53,11 @@ document.addEventListener('DOMContentLoaded', function () {
 		    			});
 	    			}
 	    		} else {
-	    			page.categoriesChecked[category] = true;
-	        		page.openTabs(this.id);
+	    			page.categoriesChecked[xcategory] = true;
+	        	page.openTabs(this.id);
 	     		 }
 	    	});
+
 	    }
 	  }
 
