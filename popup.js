@@ -6,7 +6,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     displayGroups = function(page){
 			console.log(page.categories);
-			console.log(page.categoriesChecked);
 			var $list = $('#group-block');
 			$list.html('');
 		  for (var i=0;i<page.categories.length;i++){
@@ -37,6 +36,7 @@ document.addEventListener('DOMContentLoaded', function () {
 	    	$('#'+category).change(function() {
 	    		if (!this.checked) {
 	    			console.log("in popup.js");
+	    			page.categoriesChecked[category] = false;
 	    			var tabIds = [];
 	    			console.log(page.currentTabs);
 	    			var tabs = page.currentTabs[category];
