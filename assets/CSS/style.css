@@ -24,6 +24,10 @@ body {
 	height:16px;
 }
 
+.tab-draggable:hover{
+	cursor: default;
+}
+
 .tab-draggable {
 	width: 200px;
 	margin-top: 5px;
