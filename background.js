@@ -1,6 +1,6 @@
 //  Uncomment the following to clear the local storage
 //  Note:  You must also click reload on the extension on the Chrome extensions page
-chrome.storage.local.clear();
+// chrome.storage.local.clear();
 
 /*
 window.currenttabs is an object whose keys are the different tab
@@ -8,12 +8,22 @@ categories and whose values are the current tabs open under that category
 */
 window.currentTabs={};
 window.ungrouped=[];
+window.refreshGroups=false;
 chrome.tabs.query({},function(arr){
 	for(var i=0;i<arr.length;i++){
 		window.ungrouped[i]=arr[i];
 		console.log(window.ungrouped[i]);
 	}
 	console.log(window.ungrouped);
+	for(var i=0;i<window.ungrouped.length;i++){
+		var hostname = getHostname(window.ungrouped[i].url);
+		var a = findDomainCategory(hostname)
+		if(a){
+			var tab = window.ungrouped.splice(i,1);
+			addTab(tab,a);
+
+		}
+	}
 });
 // setTimeout(function(){
 // 	console.log(window.ungrouped);
@@ -72,6 +82,14 @@ chrome.storage.local.get('domainList',function(result){
 		window.domainList = {};
 	}
 });
+function findDomainCategory(domain){
+	for (x in domainList){
+		for(var i=0;i<x.length;i++){
+			if (x[i]==domain) return x;
+		}
+	}
+	return null;
+}
 addDomain = function(url,addCategories){
 	var hostname = getHostname(url);
 	for (var i = 0; i < categories.length; i++) {
