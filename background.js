@@ -199,7 +199,12 @@ replaceOldTabs = function(category) {
 }
 
 removeCategory = function(categoryName){
+	console.log(categories);
+	console.log(categoryName);
 	window.categories.splice(window.categories.indexOf(categoryName),1);
+	for(var i=0; i<window.currentTabs[categoryName].length;i++){
+		window.ungrouped.push(window.currentTabs[categoryName][i]);
+	}
 	delete window.currentTabs[categoryName];
 	delete window.domainList[categoryName];
 	delete window.categoriesChecked[categoryName];

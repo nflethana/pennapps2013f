@@ -103,9 +103,11 @@ function bindDeleteX(page){
     var xID = ($(this).attr('id'));
     console.log(xID.slice(0, -1));
     var realId= xID.slice(0,-1);
-    page.removeCategory(realId);
-    $('#top'+realId.replace(' ','_')).hide(function(){
-      $('#top'+realId.replace(' ','_')).remove();
+    page.removeCategory(realId.replace('_',' '));
+    refreshGroup(page,'Ungrouped');
+    console.log(realId);
+    $('#wrapper'+realId).hide(function(){
+      $('#wrapper'+realId).remove();
     });
     
   });
@@ -115,8 +117,9 @@ function addGroup(page){
     if (groupName.length > 0){
       page.addCategory(groupName);
       $('#newGroupName').val('');
+      var orig = groupName;
       groupName=groupName.replace(" ","_");
-      $('#group-block').append('<div id="wrapper'+groupName+'"><div class="checkbox" id="top'+groupName+'" style="display:none;"><label class="groupLabel"><input type="checkbox" id="'+groupName+'" name="'+groupName+'" checked>'+groupName+'   </label><a href="#"><span><b id="caret'+groupName+'"class="down-caret"></b></span></a><a href="#"><span class="deleteX" id="'+groupName+'x"><i class="icon-remove"></i></span></a></div></div>');
+      $('#group-block').append('<div id="wrapper'+groupName+'"><div class="checkbox" id="top'+groupName+'" style="display:none;"><label class="groupLabel"><input type="checkbox" id="'+groupName+'" name="'+groupName+'" checked>'+orig+'   </label><a href="#"><span><b id="caret'+groupName+'"class="down-caret"></b></span></a><a href="#"><span class="deleteX" id="'+groupName+'x"><i class="icon-remove"></i></span></a></div></div>');
       var $div = $('#top'+groupName);
       $ul = $('<ul id="list'+groupName+'" class="tab-list"></ul>');
       $div.after($ul);
@@ -124,8 +127,11 @@ function addGroup(page){
       $('#wrapper' + groupName).droppable({accept: '.tab-draggable',
         drop: function(event, ui){
           var first = dragging.slice(3);
-          var second = $(this).attr("id").slice(7);
+          var second = $(this).attr("id").slice(7).replace('_',' ');
           chrome.tabs.get(dragId,function(tab){
+            console.log(page.categories);
+            console.log(second);
+            console.log($(this).attr("id").slice(7));
             page.addTab(tab,second);
             refreshGroup(page,first);
             refreshGroup(page,second);
@@ -179,7 +185,7 @@ function displayGroups(page){
         $('#wrapper' + name).droppable({accept: '.tab-draggable',
       																		drop: function(event, ui){
                                             var first = dragging.slice(3);
-                                            var second = $(this).attr("id").slice(7);
+                                            var second = $(this).attr("id").slice(7).replace('_',' ');
       																			chrome.tabs.get(dragId,function(tab){
                                               page.addTab(tab,second);
                                               refreshGroup(page,first);
