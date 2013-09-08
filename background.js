@@ -7,14 +7,27 @@ window.currenttabs is an object whose keys are the different tab
 categories and whose values are the current tabs open under that category
 */
 window.currentTabs={};
-// window.ungroupedTabs=[];
-// chrome.tabs.query({},function(arr){
-// 	for(var i=0;i<arr.length;i++){
-// 		window.ungroupedTabs[i]=arr[i];
-// 		console.log(window.ungroupedTabs[i]);
-// 	}
-// 	console.log(window.ungroupedTabs);
-// });
+window.ungrouped=[];
+window.refreshGroups=false;
+chrome.tabs.query({},function(arr){
+	for(var i=0;i<arr.length;i++){
+		window.ungrouped[i]=arr[i];
+		console.log(window.ungrouped[i]);
+	}
+	console.log(window.ungrouped);
+	for(var i=0;i<window.ungrouped.length;i++){
+		var hostname = getHostname(window.ungrouped[i].url);
+		var a = findDomainCategory(hostname)
+		if(a){
+			var tab = window.ungrouped.splice(i,1);
+			addTab(tab,a);
+
+		}
+	}
+});
+// setTimeout(function(){
+// 	console.log(window.ungrouped);
+// },10);
 window.categoriesChecked={};
 
 function uncheckCategory(category) {
@@ -69,6 +82,14 @@ chrome.storage.local.get('domainList',function(result){
 		window.domainList = {};
 	}
 });
+function findDomainCategory(domain){
+	for (x in domainList){
+		for(var i=0;i<x.length;i++){
+			if (x[i]==domain) return x;
+		}
+	}
+	return null;
+}
 addDomain = function(url,addCategories){
 	var hostname = getHostname(url);
 	for (var i = 0; i < categories.length; i++) {
@@ -80,12 +101,12 @@ addDomain = function(url,addCategories){
 
 addTab = function(tab, addCategory){
 	console.log(window.currentTabs);
-	// console.log(window.ungroupedTabs);
-	// console.log(getAllTabs());
-	// var ung = findinArray(tab.id,window.ungroupedTabs);
-	// if(ung>-1){
-	// 	window.ungroupedTabs.splice(ung,1);
-	// }
+	console.log(window.ungrouped);
+	//console.log(getAllTabs());
+	var ung = findinArray(tab.id,window.ungrouped);
+	if(ung>-1){
+		window.ungrouped.splice(ung,1);
+	}
 	// clear other categories
 	for(x in window.currentTabs){
 		for(var j=0;j<window.currentTabs[x].length;j++){
@@ -94,9 +115,9 @@ addTab = function(tab, addCategory){
 			}
 		}
 	}
-	// if (addCategory=='Ungrouped'){
-	// 	window.ungroupedTabs.push(tab);
-	// } else {
+	if (addCategory=='Ungrouped'){
+		window.ungrouped.push(tab);
+	} else {
 	// select the new one
 		window.currentTabs[addCategory].push(tab);
 	// }
