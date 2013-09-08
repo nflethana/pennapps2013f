@@ -79,7 +79,7 @@ document.addEventListener('DOMContentLoaded', function () {
       var $tabsList = $("#addTabList");
       for (var i = 0; i < page.categories.length; i++) {
         if ($('#att'+page.categories[i]).length == 0)
-        $tabsList.append('<li class="checkbox"><label><input type="checkbox" id="att'+page.categories[i]+'" name="'+page.categories[i]+'" unchecked>'+page.categories[i]+'</label></li>');
+        $tabsList.append('<li class="checkbox unstyled"><input type="checkbox" id="att'+page.categories[i]+'" name="'+page.categories[i]+'" unchecked>'+page.categories[i]+'</li>');
       }
       
       $tabsBlock.css("display","block");
