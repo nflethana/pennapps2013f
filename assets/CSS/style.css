@@ -19,7 +19,9 @@ body {
 	margin: 5px;
 	margin-bottom: 10px;
 }
-
+.tab-icon {
+	height:16px;
+}
 .groupLabel {
 	display: inline;
 }
