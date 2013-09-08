@@ -109,7 +109,7 @@ saveNewTab = function(tab) {
 
 replaceOldTabs = function(category) {
 	window.currentTabs[category] = [];
-	for (int i = 0; i < tabsBeingAdded.length; i++) {
+	for (var i = 0; i < window.tabsBeingAdded.length; i++) {
 		window.currentTabs[category].push(tabsBeingAdded[i]);
 	}
 	window.tabsBeingAdded = [];
