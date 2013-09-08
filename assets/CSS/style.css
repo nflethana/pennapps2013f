@@ -24,6 +24,7 @@ body {
 }
 .groupLabel {
 	display: inline;
+	font-size: 150%;
 }
 
 #addTabBlock {
@@ -50,6 +51,7 @@ body {
 }*/
 
 .deleteX {
+	top: 5px;
 	float: right;
 	position: relative;
 	line-height: 100%;
