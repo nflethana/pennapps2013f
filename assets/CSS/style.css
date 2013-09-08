@@ -19,9 +19,15 @@ body {
 	margin: 5px;
 	margin-bottom: 10px;
 }
+
 .tab-icon {
 	height:16px;
 }
+
+.tab-draggable {
+	width: 200px;
+}
+
 .groupLabel {
 	display: inline;
 	font-size: 150%;
@@ -89,25 +95,25 @@ ul {
 }
 
 .left-caret {
-  border-bottom: 5px solid transparent;
-  border-top: 5px solid transparent;
-  border-right: 5px solid #000000;
+  border-bottom: 7px solid transparent;
+  border-top: 7px solid transparent;
+  border-right: 7px solid #000000;
   display: inline-block;
   height: 0;
   opacity: 0.5;
-  vertical-align: middle;
+  vertical-align: center;
   width: 0;
   transition: 0.2s;
 }
 
 .down-caret {
-	border-right: 5px solid transparent;
-	border-left: 5px solid transparent;
-	border-top: 5px solid #000000;
+	border-right: 7px solid transparent;
+	border-left: 7px solid transparent;
+	border-top: 7px solid #000000;
 	display: inline-block;
 	height: 0;
 	opacity: 0.5;
-	vertical-align: middle;
+	vertical-align: center;
 	width: 0;
 	transition: 0.2s;
 }

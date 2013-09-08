@@ -35,35 +35,26 @@ document.addEventListener('DOMContentLoaded', function () {
         dragId = parseInt($(this).attr('id'));
   		}
 
-    	$('.left-caret').on('click', function(e){
-        if(left){
-       	  $(this).addClass('left-caret');
-      	  $(this).removeClass('down-caret');
-        } else{
-          $(this).addClass('down-caret');
-          $(this).removeClass('left-caret');
-        }
-        left=!left;
-    	});
+  	$('.down-caret').on('click', function(){
+  		var $thisId = $(this).attr('id').slice(5);
+  		console.log($thisId);
+      if(left){
+     	  $(this).addClass('left-caret');
+    	  $(this).removeClass('down-caret');
+    	  $('#list' + $thisId).hide("fast");
+      } else{
+        $(this).addClass('down-caret');
+        $(this).removeClass('left-caret');
+        $('#list' + $thisId).show("fast");
+      }
+      left=!left;
+  	});
 
-  		$('#showUngrouped').on('click', function(){
-  			if ($(this).text() == "Show ungrouped tabs"){
-  				$(this).text("Hide ungrouped tabs");
-  			}
-  			else {
-  				$(this).text("Show ungrouped tabs");
-  			}
-  		});
-
-  		$('.plusButton').click(function(){
-  			addGroup(page);
-  		});
-
-  		$('#newGroupName').keypress(function(e){
-  			if (e.which == 13){
-  				addGroup(page);
-  			}
-  		});
+		$('#newGroupName').keypress(function(e){
+			if (e.which == 13){
+				addGroup(page);
+			}
+		});
 
       // Add functionality for Add current tab to...
       
@@ -305,6 +296,7 @@ function addUncheck(page) {
 
 }
 function liFromTab(tab){
+
   var title = tab.title;
   if (title.length>50){
     title=title.slice(0,51)+'...';
@@ -316,5 +308,6 @@ function liFromTab(tab){
     favIconUrl = tab.favIconUrl;
   }
   $li = $('<li id="'+tab.id+'"" class="tab-draggable"><img class="tab-icon" src="'+favIconUrl+'"/>  '+title+'</li>');
+
   return $li;
 }
