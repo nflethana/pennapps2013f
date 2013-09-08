@@ -2,113 +2,131 @@ var dragging = '';
 var dragId;
 document.addEventListener('DOMContentLoaded', function () {
   chrome.runtime.getBackgroundPage(function(page){
-    console.log(page);
-    var left = true;
-    console.log(page.categories);
-
-		displayGroups(page);
-		addUncheck(page);
-		
-		$('.tab-draggable').draggable({containment: 'body',
-																		revert: 'invalid',
-																		start: startDrag});
-
-		function startDrag(event, ui){
-			dragging = $(this).parent('ul').prev().attr('id');
-      dragId = parseInt($(this).attr('id'));
-		}
-
-  	$('.left-caret').on('click', function(e){
-      if(left){
-     	  $(this).addClass('left-caret');
-    	  $(this).removeClass('down-caret');
-      } else{
-        $(this).addClass('down-caret');
-        $(this).removeClass('left-caret');
+    chrome.tabs.query({},function(tabArr){
+      $('UngroupedTabs').attr('checked',page.categoriesChecked['Ungrouped']);
+      var newCurrentTabs = {};
+      for(x in page.currentTabs){
+        newCurrentTabs[x] = [];
       }
-      left=!left;
-  	});
-
-		$('#showUngrouped').on('click', function(){
-			if ($(this).text() == "Show ungrouped tabs"){
-				$(this).text("Hide ungrouped tabs");
-			}
-			else {
-				$(this).text("Show ungrouped tabs");
-			}
-		});
-
-		$('.plusButton').click(function(){
-			addGroup(page);
-		});
-
-		$('#newGroupName').keypress(function(e){
-			if (e.which == 13){
-				addGroup(page);
-			}
-		});
-
-    // Add functionality for Add current tab to...
-    
-    $('#submitAddTab').click(function() {
-
-      console.log(page.currentTabs);
-        var checkedCategory;
-        var $tabsBlock = $('#addTabBlock');
-        for (var i = 0; i < page.categories.length; i++) {
-          var $listItem = $('#att'+page.categories[i]);
-          if ($listItem.is(':checked')) {
-            checkedCategory=page.categories[i];
-          }
+      var newUngrouped = [];
+      for(var i=0;i<tabArr.length;i++){
+        var group = page.findInObj(tabArr[i].id,page.currentTabs);
+        if(group!="Ungrouped"){
+          newCurrentTabs[group].push(tabArr[i]);
+        }else{
+          newUngrouped.push(tabArr[i]);
         }
-
-
-        chrome.tabs.getSelected(null, function(tab) {
-          page.addTab(tab, checkedCategory);
-          console.log(page.currentTabs);
-         });
-
-        $tabsBlock.css("display", "none");
-
-    });
-
-    $('#cancelAddTab').click(function() {
-      var $tabsBlock = $('#addTabBlock');
-      $tabsBlock.css("display", "none");
-    });
-
-    $('#addCurrentTabTo').click(function() {
-    	// chrome.tabs.query({
-    	// 	active: true,
-    	// 	lastFocusedWindow: true
-    	// }, function(tabs) {
-    	// 	console.log(tabs);
-    	// 	var tab = tabs[0];
-    	// 	console.log(tab);
-    	// });
-
-    
-      var $tabsBlock = $("#addTabBlock");
-      var $tabsList = $("#addTabList");
-      for (var i = 0; i < page.categories.length; i++) {
-        if ($('#att'+page.categories[i]).length == 0)
-        $tabsList.append('<li><label class="radio"><input type="radio" id="att'+page.categories[i]+'" name="tabOptions" value="'+page.categories[i]+'">'+page.categories[i]+'</label></li>');
       }
+      page.currentTabs=newCurrentTabs;
+      page.ungrouped=newUngrouped;
+      console.log(page);
+      var left = true;
+      console.log(page.categories);
+
+  		displayGroups(page);
+  		addUncheck(page);
+  		
+  		$('.tab-draggable').draggable({containment: 'body',
+  																		revert: 'invalid',
+  																		start: startDrag});
+
+  		function startDrag(event, ui){
+  			dragging = $(this).parent('ul').prev().attr('id');
+        dragId = parseInt($(this).attr('id'));
+  		}
+
+    	$('.left-caret').on('click', function(e){
+        if(left){
+       	  $(this).addClass('left-caret');
+      	  $(this).removeClass('down-caret');
+        } else{
+          $(this).addClass('down-caret');
+          $(this).removeClass('left-caret');
+        }
+        left=!left;
+    	});
+
+  		$('#showUngrouped').on('click', function(){
+  			if ($(this).text() == "Show ungrouped tabs"){
+  				$(this).text("Hide ungrouped tabs");
+  			}
+  			else {
+  				$(this).text("Show ungrouped tabs");
+  			}
+  		});
+
+  		$('.plusButton').click(function(){
+  			addGroup(page);
+  		});
+
+  		$('#newGroupName').keypress(function(e){
+  			if (e.which == 13){
+  				addGroup(page);
+  			}
+  		});
+
+      // Add functionality for Add current tab to...
       
-      $tabsBlock.css("display","block");
+      $('#submitAddTab').click(function() {
 
-    	});
+        console.log(page.currentTabs);
+          var checkedCategory;
+          var $tabsBlock = $('#addTabBlock');
+          for (var i = 0; i < page.categories.length; i++) {
+            var $listItem = $('#att'+page.categories[i]);
+            if ($listItem.is(':checked')) {
+              checkedCategory=page.categories[i];
+            }
+          }
 
-    //  Add functionality for Add reminder to current page
-    $('#addReminderToCurrentPage').click(function() {
-    	// add logic for adding a reminder...
-    	
-    	var alarmInfo = {};
-    	alarmInfo.when = Date.now() + 10;
-    	chrome.alarms.create("alarm1", alarmInfo);
-    	chrome.alarms.onAlarm.addListener(function(alarm) {
-    		console.log("alarm sounded!");
-    	});
+
+          chrome.tabs.getSelected(null, function(tab) {
+            page.addTab(tab, checkedCategory);
+            console.log(page.currentTabs);
+           });
+
+          $tabsBlock.css("display", "none");
+
+      });
+
+      $('#cancelAddTab').click(function() {
+        var $tabsBlock = $('#addTabBlock');
+        $tabsBlock.css("display", "none");
+      });
+
+      $('#addCurrentTabTo').click(function() {
+      	// chrome.tabs.query({
+      	// 	active: true,
+      	// 	lastFocusedWindow: true
+      	// }, function(tabs) {
+      	// 	console.log(tabs);
+      	// 	var tab = tabs[0];
+      	// 	console.log(tab);
+      	// });
+
+      
+        var $tabsBlock = $("#addTabBlock");
+        var $tabsList = $("#addTabList");
+        for (var i = 0; i < page.categories.length; i++) {
+          if ($('#att'+page.categories[i]).length == 0)
+          $tabsList.append('<li><label class="radio"><input type="radio" id="att'+page.categories[i]+'" name="tabOptions" value="'+page.categories[i]+'">'+page.categories[i]+'</label></li>');
+        }
+        
+        $tabsBlock.css("display","block");
+
+      	});
+
+      //  Add functionality for Add reminder to current page
+      $('#addReminderToCurrentPage').click(function() {
+      	// add logic for adding a reminder...
+      	
+      	var alarmInfo = {};
+      	alarmInfo.when = Date.now() + 10;
+      	chrome.alarms.create("alarm1", alarmInfo);
+      	chrome.alarms.onAlarm.addListener(function(alarm) {
+      		console.log("alarm sounded!");
+      	});
+      });
     });
   });
 });
@@ -130,12 +148,22 @@ function addGroup(page){
       page.addCategory(groupName);
       $('#newGroupName').val('');
       groupName=groupName.replace(" ","_");
-      $('#group-block').append('<div class="checkbox" id="top'+groupName+'" style="display:none;"><label class="groupLabel"><input type="checkbox" id="'+groupName+'" name="'+groupName+'" checked>'+groupName+'</label><a href="#"><span class="deleteX" id="'+groupName+'x"><i class="icon-remove"></i></span></a></div>');
+      $('#group-block').append('<div id="wrapper'+groupName+'"><div class="checkbox" id="top'+groupName+'" style="display:none;"><label class="groupLabel"><input type="checkbox" id="'+groupName+'" name="'+groupName+'" checked>'+groupName+'</label><a href="#"><span class="deleteX" id="'+groupName+'x"><i class="icon-remove"></i></span></a></div></div>');
       var $div = $('#top'+groupName);
       $ul = $('<ul id="list'+groupName+'" class="tab-list"></ul>');
       $div.after($ul);
       $('.checkbox').show('slow');
-      $('#top' + groupName).droppable({accept: '.tab-draggable'});
+      $('#wrapper' + groupName).droppable({accept: '.tab-draggable',
+        drop: function(event, ui){
+          var first = dragging.slice(3);
+          var second = $(this).attr("id").slice(7);
+          chrome.tabs.get(dragId,function(tab){
+            page.addTab(tab,second);
+            refreshGroup(page,first);
+            refreshGroup(page,second);
+          })
+        }
+        });
     }
 
     bindDeleteX(page);
@@ -180,11 +208,11 @@ function displayGroups(page){
         }
         console.log('appending' + i);
         var name = page.categories[i].replace(' ','_');
-        $list.append('<div class="checkbox" id="top'+name+'"><label class="groupLabel"><input type="checkbox" id="'+name+'" name="'+name+'" '+checked+'>'+page.categories[i]+'</label><a href="#"><span class="deleteX" id="'+name+'x"><i class="icon-remove"></i></span></a></div>');
-        $('#top' + name).droppable({accept: '.tab-draggable',
+        $list.append('<div id="wrapper'+name+'"><div class="checkbox" id="top'+name+'"><label class="groupLabel"><input type="checkbox" id="'+name+'" name="'+name+'" '+checked+'>'+page.categories[i]+'</label><a href="#"><span class="deleteX" id="'+name+'x"><i class="icon-remove"></i></span></a></div></div>');
+        $('#wrapper' + name).droppable({accept: '.tab-draggable',
       																		drop: function(event, ui){
                                             var first = dragging.slice(3);
-                                            var second = $(this).attr("id").slice(3);
+                                            var second = $(this).attr("id").slice(7);
       																			chrome.tabs.get(dragId,function(tab){
                                               page.addTab(tab,second);
                                               refreshGroup(page,first);
@@ -209,10 +237,10 @@ function displayGroups(page){
         var $li = liFromTab(page.ungrouped[i]);
         $ul.append($li);
       }
-      $('#topUngrouped').droppable({accept: '.tab-draggable',
+      $('#wrapperUngrouped').droppable({accept: '.tab-draggable',
                                           drop: function(event, ui){
                                             var first = dragging.slice(3);
-                                            var second = $(this).attr("id").slice(3);
+                                            var second = $(this).attr("id").slice(7);
                                             chrome.tabs.get(dragId,function(tab){
                                               page.addTab(tab,second);
                                               refreshGroup(page,first);
@@ -253,6 +281,28 @@ function addUncheck(page) {
         });
 
     }
+    $('#UngroupedTabs').change(function() {
+      if (!this.checked) {
+        page.categoriesChecked['Ungrouped'] = false;
+        var tabIds = [];
+        var tabs = page.ungrouped;
+        console.log(currentTabs);
+        console.log(tabs);
+        for(var i = 0; i < tabs.length; i++) {
+          console.log("In here");
+          tabIds.push(tabs[i].id);
+        }
+        if (tabIds.length > 0) {
+          chrome.tabs.remove(tabIds, function() {
+
+          });
+        }
+      } else {
+        page.categoriesChecked['Ungrouped'] = false;
+        page.openTabs('Ungrouped');
+       }
+    });
+
 }
 function liFromTab(tab){
   var title = tab.title;

@@ -55,12 +55,7 @@ function getAllTabs(){
 		return arr.slice(0);
 	});
 }
-function findinArray(tabId,arr){
-	for(var i=0;i<arr.length;i++){
-		if(arr[i].id==tabId) return i;
-	}
-	return -1;
-}
+
 /* 
 categories is just an array with all the category names in it
 */
@@ -76,6 +71,7 @@ chrome.storage.local.get('categories',function(result){
 			window.currentTabs[window.categories[i]]=[];
 		}
 		window.categoriesChecked[window.categories[i]]=true;
+		window.categoriesChecked['Ungrouped']=true;
 	}
 });
 
@@ -97,6 +93,18 @@ function findDomainCategory(domain){
 		}
 	}
 	return null;
+}
+findinArray= function(tabId,arr){
+	for(var i=0;i<arr.length;i++){
+		if(arr[i].id==tabId) return i;
+	}
+	return -1;
+}
+findInObj = function(tabId,obj){
+	for(x in obj){
+		if(findinArray(tabId,obj[x])>-1) return x;
+	}
+	return 'Ungrouped';
 }
 addDomain = function(url,addCategories){
 	var hostname = getHostname(url);
@@ -129,6 +137,9 @@ addTab = function(tab, addCategory){
 	// select the new one
 		window.currentTabs[addCategory].push(tab);
 	}
+	if(!window.categoriesChecked[addCategory]){
+		chrome.tabs.remove(tab.id,function(){});
+	}
 	saveTabs();
 }
 
@@ -143,8 +154,14 @@ findCategories = function(tabID){
 }
 
 openTabs = function(category){
-	for(var i=0; i<window.currentTabs[category].length;i++){
-		chrome.tabs.create({url:window.currentTabs[category][i].url}, function(newTab){
+	var arr;
+	if(category=='Ungrouped'){
+		arr = window.ungrouped;
+	} else {
+		arr = window.currentTabs[category];
+	}
+	for(var i=0; i<arr.length;i++){
+		chrome.tabs.create({url:arr[i].url}, function(newTab){
 			saveNewTab(newTab);
 
 			// window.currentTabs[category][i]=newTab;
@@ -164,9 +181,19 @@ saveNewTab = function(tab) {
 }
 
 replaceOldTabs = function(category) {
-	window.currentTabs[category] = [];
+	if(category=="Ungrouped"){
+		window.ungrouped=[];
+	} else{
+		window.currentTabs[category] = [];
+	}
+	
 	for (var i = 0; i < window.tabsBeingAdded.length; i++) {
-		window.currentTabs[category].push(tabsBeingAdded[i]);
+		if(category=="Ungrouped"){
+			window.ungrouped.push(tabsBeingAdded[i]);
+		} else{
+			window.currentTabs[category].push(tabsBeingAdded[i]);
+		}
+		
 	}
 	window.tabsBeingAdded = [];
 }
