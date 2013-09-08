@@ -30,13 +30,7 @@ body {
 
 .groupLabel {
 	display: inline;
-	font-size: 150%;
-}
-
-.radiobutton {
-	display: inline;
-	float: left;
-	font-size: 110%;
+	font-size: 120%;
 }
 
 #addTabBlock {

@@ -84,30 +84,7 @@ document.addEventListener('DOMContentLoaded', function () {
         var $tabsBlock = $('#addTabBlock');
         $tabsBlock.css("display", "none");
       });
-
-      $('#addCurrentTabTo').click(function() {
-      	// chrome.tabs.query({
-      	// 	active: true,
-      	// 	lastFocusedWindow: true
-      	// }, function(tabs) {
-      	// 	console.log(tabs);
-      	// 	var tab = tabs[0];
-      	// 	console.log(tab);
-      	// });
-
-      
-        var $tabsBlock = $("#addTabBlock");
-        var $tabsList = $("#addTabList");
-        for (var i = 0; i < page.categories.length; i++) {
-          if ($('#att'+page.categories[i]).length == 0)
-          $tabsList.append('<li><label class="radio"><input type="radio" id="att'+page.categories[i]+'" name="tabOptions" value="'+page.categories[i]+'">'+page.categories[i]+'</label></li>');
-        }
-        
-        $tabsBlock.css("display","block");
-
-      	});
-
-      //  Add functionality for Add reminder to current page
+    //  Add functionality for Add reminder to current page
       $('#addReminderToCurrentPage').click(function() {
       	// add logic for adding a reminder...
       	
@@ -116,7 +93,7 @@ document.addEventListener('DOMContentLoaded', function () {
       	chrome.alarms.create("alarm1", alarmInfo);
       	chrome.alarms.onAlarm.addListener(function(alarm) {
       		console.log("alarm sounded!");
-      	});
+    	 });
       });
     });
   });
@@ -139,7 +116,7 @@ function addGroup(page){
       page.addCategory(groupName);
       $('#newGroupName').val('');
       groupName=groupName.replace(" ","_");
-      $('#group-block').append('<div id="wrapper'+groupName+'"><div class="checkbox" id="top'+groupName+'" style="display:none;"><label class="groupLabel"><input type="checkbox" id="'+groupName+'" name="'+groupName+'" checked>'+groupName+'</label><a href="#"><span class="deleteX" id="'+groupName+'x"><i class="icon-remove"></i></span></a></div></div>');
+      $('#group-block').append('<div id="wrapper'+groupName+'"><div class="checkbox" id="top'+groupName+'" style="display:none;"><label class="groupLabel"><input type="checkbox" id="'+groupName+'" name="'+groupName+'" checked>'+groupName+'</label><a href="#"><span><b id="caret'+page.categories[i]+'"class="down-caret"></b></span></a><a href="#"><span class="deleteX" id="'+groupName+'x"><i class="icon-remove"></i></span></a></div></div>');
       var $div = $('#top'+groupName);
       $ul = $('<ul id="list'+groupName+'" class="tab-list"></ul>');
       $div.after($ul);
@@ -152,7 +129,7 @@ function addGroup(page){
             page.addTab(tab,second);
             refreshGroup(page,first);
             refreshGroup(page,second);
-          })
+          });
         }
         });
     }
@@ -199,7 +176,7 @@ function displayGroups(page){
         }
         console.log('appending' + i);
         var name = page.categories[i].replace(' ','_');
-        $list.append('<div id="wrapper'+name+'"><div class="checkbox" id="top'+name+'"><label class="groupLabel"><input type="checkbox" id="'+name+'" name="'+name+'" '+checked+'>'+page.categories[i]+'</label><a href="#"><span class="deleteX" id="'+name+'x"><i class="icon-remove"></i></span></a></div></div>');
+        $list.append('<div id="wrapper'+name+'"><div class="checkbox" id="top'+name+'"><label class="groupLabel"><input type="checkbox" id="'+name+'" name="'+name+'" '+checked+'>'+page.categories[i]+'</label><a href="#"><span><b id="caret'+page.categories[i]+'"class="down-caret"></b></span></a><a href="#"><span class="deleteX" id="'+name+'x"><i class="icon-remove"></i></span></a></div></div>');
         $('#wrapper' + name).droppable({accept: '.tab-draggable',
       																		drop: function(event, ui){
                                             var first = dragging.slice(3);
