@@ -5,7 +5,14 @@ window.currenttabs is an object whose keys are the different tab
 categories and whose values are the current tabs open under that category
 */
 window.currentTabs={};
-window.ungroupedTabs=getAllTabs();
+// window.ungroupedTabs=[];
+// chrome.tabs.query({},function(arr){
+// 	for(var i=0;i<arr.length;i++){
+// 		window.ungroupedTabs[i]=arr[i];
+// 		console.log(window.ungroupedTabs[i]);
+// 	}
+// 	console.log(window.ungroupedTabs);
+// });
 window.categoriesChecked={};
 
 function uncheckCategory(category) {
@@ -21,7 +28,8 @@ function checkCategory(category) {
 }
 function getAllTabs(){
 	chrome.tabs.query({},function(arr){
-		return arr;
+		console.log(arr);
+		return arr.slice(0);
 	});
 }
 function findinArray(tabId,arr){
@@ -38,7 +46,7 @@ chrome.storage.local.get('categories',function(result){
 	if(result.categories){
 		window.categories = result.categories;
 	} else {
-		window.categories = ['Ungrouped'];
+		window.categories = [];
 	}
 	for(var i=0;i<window.categories.length;i++){
 		if(typeof window.currentTabs[window.categories[i]]== "undefined"){
@@ -68,13 +76,13 @@ addDomain = function(url,addCategories){
 	}
 }
 addTab = function(tab, addCategory){
-	if 
-	var ung = findinArray(tab.id,ungroupedTabs);
-	if(ung>-1){
-		window.ungroupedTabs.splice(ung,1);
-	}
-	var currentCats = findCategories(tab.id);
-	var notCategories = window.categories.slice(0);
+	console.log(window.currentTabs);
+	// console.log(window.ungroupedTabs);
+	// console.log(getAllTabs());
+	// var ung = findinArray(tab.id,window.ungroupedTabs);
+	// if(ung>-1){
+	// 	window.ungroupedTabs.splice(ung,1);
+	// }
 	// clear other categories
 	for(x in window.currentTabs){
 		for(var j=0;j<window.currentTabs[x].length;j++){
@@ -83,9 +91,12 @@ addTab = function(tab, addCategory){
 			}
 		}
 	}
+	// if (addCategory=='Ungrouped'){
+	// 	window.ungroupedTabs.push(tab);
+	// } else {
 	// select the new one
-	window.currentTabs[addCategory].push(tab);
-	
+		window.currentTabs[addCategory].push(tab);
+	}
 	saveTabs();
 }
 findCategories = function(tabID){
