@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', function () {
         var group = page.findInObj(tabArr[i].id,page.currentTabs);
         if(group!="Ungrouped" && page.groupExits.indexOf(group)==-1){
           newCurrentTabs[group].push(tabArr[i]);
-        }else{
+        }else if(group=="Ungrouped" && tabArr[i].title!=null && tabArr[i].title.length>0){
           newUngrouped.push(tabArr[i]);
         }
       }
