@@ -1,4 +1,6 @@
-
+//  Uncomment the following to clear the local storage
+//  Note:  You must also click reload on the extension on the Chrome extensions page
+chrome.storage.local.clear();
 
 /*
 window.currenttabs is an object whose keys are the different tab
@@ -112,10 +114,28 @@ findCategories = function(tabID){
 openTabs = function(category){
 	for(var i=0; i<window.currentTabs[category].length;i++){
 		chrome.tabs.create({url:window.currentTabs[category][i].url},function(newTab){
-			window.currentTabs[category][i]=newTab;
+			saveNewTab(newTab);
+
+			// window.currentTabs[category][i]=newTab;
 		});
 	}
+	replaceOldTabs(category);
 }
+
+window.tabsBeingAdded = [];
+
+saveNewTab = function(tab) {
+	window.tabsBeingAdded.push(tab);
+}
+
+replaceOldTabs = function(category) {
+	window.currentTabs[category] = [];
+	for (var i = 0; i < window.tabsBeingAdded.length; i++) {
+		window.currentTabs[category].push(tabsBeingAdded[i]);
+	}
+	window.tabsBeingAdded = [];
+}
+
 removeCategory = function(categoryName){
 	window.categories.splice(window.categories.indexOf(categoryName),1);
 	delete window.currentTabs[categoryName];
