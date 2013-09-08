@@ -1,4 +1,5 @@
 var dragging = '';
+var dragId;
 document.addEventListener('DOMContentLoaded', function () {
   chrome.runtime.getBackgroundPage(function(page){
     console.log(page);
@@ -14,6 +15,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 		function startDrag(event, ui){
 			dragging = $(this).parent('ul').prev().attr('id');
+      dragId = parseInt($(this).attr('id'));
 		}
 
   	$('.left-caret').on('click', function(e){
@@ -140,13 +142,28 @@ function addGroup(page){
     addUncheck(page);
 }
 function refreshGroup(page,groupName){
-  $('#list'+groupName.replace(' ','_')).remove();
-  var $div = $('#top'+x.replace(' ','_'));
-  $ul = $('<ul id="list'+x.replace(' ','_')+'" class="tab-list"></ul>');
-  $div.after($ul);
-  for(var i=0;i<page.currentTabs[x].length;i++){
-      var $li = liFromTab(page.currentTabs[x][i]);
+  $('#list'+groupName.replace(' ','_')).empty();
+  $ul = $('#list'+groupName.replace(' ','_'));
+  console.log(groupName);
+  console.log(page.currentTabs);
+  console.log(page.currentTabs[groupName]);
+  var arr;
+  if(groupName=="Ungrouped"){
+    arr=page.ungrouped;
+  } else {
+    arr = page.currentTabs[groupName];
+  }
+  for(var i=0;i<arr.length;i++){
+      var $li = liFromTab(arr[i]);
       $ul.append($li);
+  }
+  $('.tab-draggable').draggable({containment: 'body',
+                                    revert: 'invalid',
+                                    start: startDrag});
+
+  function startDrag(event, ui){
+    dragging = $(this).parent('ul').prev().attr('id');
+    dragId = parseInt($(this).attr('id'));
   }
 }
 function displayGroups(page){
@@ -166,8 +183,13 @@ function displayGroups(page){
         $list.append('<div class="checkbox" id="top'+name+'"><label class="groupLabel"><input type="checkbox" id="'+name+'" name="'+name+'" '+checked+'>'+page.categories[i]+'</label><a href="#"><span class="deleteX" id="'+name+'x"><i class="icon-remove"></i></span></a></div>');
         $('#top' + name).droppable({accept: '.tab-draggable',
       																		drop: function(event, ui){
-      																			console.log(ui.draggable);
-      																			console.log("dropped " + dragging + " in " + $(this).attr("id"));
+                                            var first = dragging.slice(3);
+                                            var second = $(this).attr("id").slice(3);
+      																			chrome.tabs.get(dragId,function(tab){
+                                              page.addTab(tab,second);
+                                              refreshGroup(page,first);
+                                              refreshGroup(page,second);
+                                            })
       																		}
       																		});
       }
@@ -181,12 +203,23 @@ function displayGroups(page){
         }
       }
       $ung= $('#topUngrouped');
-      $ul = $('<ul class="tab-list"></ul>');
+      $ul = $('<ul id="listUngrouped" class="tab-list"></ul>');
       $ung.after($ul);
       for(var i=0;i<page.ungrouped.length;i++){
         var $li = liFromTab(page.ungrouped[i]);
         $ul.append($li);
       }
+      $('#topUngrouped').droppable({accept: '.tab-draggable',
+                                          drop: function(event, ui){
+                                            var first = dragging.slice(3);
+                                            var second = $(this).attr("id").slice(3);
+                                            chrome.tabs.get(dragId,function(tab){
+                                              page.addTab(tab,second);
+                                              refreshGroup(page,first);
+                                              refreshGroup(page,second);
+                                            })
+                                          }
+                                          });
       bindDeleteX(page);
     }
 function addUncheck(page) {
@@ -232,6 +265,6 @@ function liFromTab(tab){
     console.log(tab.favIconUrl);
     favIconUrl = tab.favIconUrl;
   }
-  $li = $('<li id="'+tab.id+'"" class="tab-draggable ui-widget-content"><img class="tab-icon" src="'+favIconUrl+'"/>  '+title+'</li>');
+  $li = $('<li id="'+tab.id+'"" class="tab-draggable"><img class="tab-icon" src="'+favIconUrl+'"/>  '+title+'</li>');
   return $li;
 }
