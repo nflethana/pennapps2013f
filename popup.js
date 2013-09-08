@@ -174,3 +174,6 @@ function addUncheck(page) {
 
     }
 }
+function liFromTab(tab){
+  $li = $('<li><img src="'+tab.favIconUrl+'"/><span class="tab-url"'+tab.url+'</span></li>');
+}
