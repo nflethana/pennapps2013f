@@ -1,3 +1,4 @@
+var dragging = '';
 document.addEventListener('DOMContentLoaded', function () {
   chrome.runtime.getBackgroundPage(function(page){
     console.log(page);
@@ -7,6 +8,14 @@ document.addEventListener('DOMContentLoaded', function () {
 		displayGroups(page);
 		addUncheck(page);
 		
+		$('.tab-draggable').draggable({containment: 'body',
+																		revert: 'invalid',
+																		start: startDrag});
+
+		function startDrag(event, ui){
+			dragging = $(this).parent('ul').prev().attr('id');
+		}
+
   	$('.left-caret').on('click', function(e){
       if(left){
      	  $(this).addClass('left-caret');
@@ -50,6 +59,8 @@ document.addEventListener('DOMContentLoaded', function () {
             checkedCategory=page.categories[i];
           }
         }
+
+
         chrome.tabs.getSelected(null, function(tab) {
           page.addTab(tab, checkedCategory);
           console.log(page.currentTabs);
@@ -79,7 +90,7 @@ document.addEventListener('DOMContentLoaded', function () {
       var $tabsList = $("#addTabList");
       for (var i = 0; i < page.categories.length; i++) {
         if ($('#att'+page.categories[i]).length == 0)
-        $tabsList.append('<li class="checkbox"><label><input type="checkbox" id="att'+page.categories[i]+'" name="'+page.categories[i]+'" unchecked>'+page.categories[i]+'</label></li>');
+        $tabsList.append('<li><label class="radio"><input type="radio" id="att'+page.categories[i]+'" name="tabOptions" value="'+page.categories[i]+'">'+page.categories[i]+'</label></li>');
       }
       
       $tabsBlock.css("display","block");
@@ -122,6 +133,7 @@ function addGroup(page){
       $ul = $('<ul id="list'+groupName+'" class="tab-list"></ul>');
       $div.after($ul);
       $('.checkbox').show('slow');
+      $('#top' + groupName).droppable({accept: '.tab-draggable'});
     }
 
     bindDeleteX(page);
@@ -152,6 +164,12 @@ function displayGroups(page){
         console.log('appending' + i);
         var name = page.categories[i].replace(' ','_');
         $list.append('<div class="checkbox" id="top'+name+'"><label class="groupLabel"><input type="checkbox" id="'+name+'" name="'+name+'" '+checked+'>'+page.categories[i]+'</label><a href="#"><span class="deleteX" id="'+name+'x"><i class="icon-remove"></i></span></a></div>');
+        $('#top' + name).droppable({accept: '.tab-draggable',
+      																		drop: function(event, ui){
+      																			console.log(ui.draggable);
+      																			console.log("dropped " + dragging + " in " + $(this).attr("id"));
+      																		}
+      																		});
       }
       for (var x in page.currentTabs){
         var $div = $('#top'+x.replace(' ','_'));
