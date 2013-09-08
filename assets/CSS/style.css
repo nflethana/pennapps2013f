@@ -24,6 +24,13 @@ body {
 }
 .groupLabel {
 	display: inline;
+	font-size: 150%;
+}
+
+.radiobutton {
+	display: inline;
+	float: left;
+	font-size: 110%;
 }
 
 #addTabBlock {
@@ -57,6 +64,7 @@ ul {
 }*/
 
 .deleteX {
+	top: 5px;
 	float: right;
 	position: relative;
 	line-height: 100%;
